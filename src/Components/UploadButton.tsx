@@ -13,10 +13,11 @@ const UploadButton: React.FC<UploadButtonProps> = ({ onDrop }) => {
   });
 
   return (
-    <div className="w-full h-full bg-green-500 flex justify-center items-center">
+    <div className="relative w-[200px] h-[60px] bg-green-500 flex justify-center items-center">
+      {" "}
       <div
         {...getRootProps()}
-        className="absolute top-[32px] left-[41px] w-[218px] h-[30.81px] flex justify-center items-center text-white text-[18px] font-normal cursor-pointer"
+        className="flex justify-center items-center w-full h-full text-white text-lg font-normal cursor-pointer"
         style={{ fontFamily: "Inter" }}
       >
         <input {...getInputProps()} />

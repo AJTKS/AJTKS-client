@@ -39,26 +39,27 @@ const MainPage: React.FC = () => {
   );
 
   return (
-    <div>
-      <div className="w-full h-full bg-white"></div>
-      <div>
-        <img className="w-full h-auto" src="Vector.png"></img>
+    <div className="overflow-hidden w-full min-h-screen fixed inset-0">
+      <img
+        className="absolute w-full min-h-screen object-cover"
+        src="Desktop - 8.png"
+        alt="Background"
+      />
+      <div className="absolute left-[342.51px] top-[458px] w-[820px] h-[107px] flex justify-center items-center">
         <div
-          className="absolute left-[342.51px] top-[458px] w-[820px] h-[107px] text-white text-[62px] font-normal break-words"
+          className="text-white text-[62px] font-normal break-words"
           style={{ fontFamily: "Inter" }}
         >
           알아서 잘 딱 깔끔하게 센스있게
         </div>
-        <div
-          className="absolute left-[457.51px] top-[583px] w-[589px] h-[38px] text-gray-300 text-[22px] font-normal break-words"
-          style={{ fontFamily: "Inter" }}
-        >
-          Input the Audio, and then wait for our recommendation!
-        </div>
+      </div>
+      <div className="absolute left-[457.51px] top-[583px] w-[589px] flex flex-col justify-center items-center text-gray-300 text-[22px] font-normal break-words">
+        Input the Audio, and then wait for our recommendation!
         <UploadButton onDrop={onDrop} />
       </div>
+
       {isAnalyzing && (
-        <div className="absolute w-full h-full bg-white bg-opacity-75 flex justify-center items-center">
+        <div className="absolute inset-0 bg-white bg-opacity-75 flex justify-center items-center">
           <div
             className="text-center text-black text-[35px] font-normal"
             style={{ fontFamily: "Inter" }}
@@ -67,7 +68,7 @@ const MainPage: React.FC = () => {
           </div>
           <img
             className="w-[391px] h-[351.90px]"
-            src="/ajtks-client/public/1c06fef0a28189bbd6e4e04ddb5ac6a6.png"
+            src="1c06fef0a28189bbd6e4e04ddb5ac6a6.png"
             alt="Analysis"
           />
         </div>
