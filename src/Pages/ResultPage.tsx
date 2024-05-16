@@ -5,7 +5,7 @@ import axios from "axios";
 const ResultPage = () => {
   const location = useLocation();
   const { taskId } = location.state || {};
-  const [searchResult, setSearchResult] = useState<any>(null);
+  const [searchResult, setSearchResult] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -20,19 +20,15 @@ const ResultPage = () => {
         const response = await axios.get(
           `https://ajtksbackend.p-e.kr/task/${taskId}`
         );
-        const { status, searchResult } = response.data;
+        const { searchResult } = response.data;
 
-        if (status === "completed") {
-          // Decode the search result
-          const decodedResult = searchResult.map((result: any) => ({
-            ...result,
-            musicName: decodeURIComponent(escape(result.musicName)),
-            singer: decodeURIComponent(escape(result.singer)),
-          }));
-          setSearchResult(decodedResult);
-        } else {
-          setTimeout(fetchResult, 3000);
-        }
+        // Decode the search result
+        const decodedResult = searchResult.map((result: any) => ({
+          ...result,
+          musicName: decodeURIComponent(escape(result.musicName)),
+          singer: decodeURIComponent(escape(result.singer)),
+        }));
+        setSearchResult(decodedResult);
       } catch (error) {
         console.error("Error fetching task status:", error);
         setError("결과를 가져오는 중 오류가 발생했습니다.");
@@ -58,10 +54,6 @@ const ResultPage = () => {
     );
   }
 
-  if (!searchResult) {
-    return null; // Don't show anything while loading
-  }
-
   return (
     <div className="overflow-hidden w-full min-h-screen fixed inset-0 flex flex-col items-center justify-center">
       <img
@@ -73,15 +65,16 @@ const ResultPage = () => {
         추천 음악 목록
       </div>
       <div className="relative z-10 mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4">
-        {searchResult.map((result: any, index: number) => (
+        {searchResult.map((result, index) => (
           <div
             key={index}
             className="relative w-[172px] h-[228px] rounded-tl-[38px] overflow-hidden bg-white bg-opacity-60 shadow-md border border-white backdrop-blur-md"
           >
             <div className="w-full h-[172px] bg-gray-300">
+              {/* Placeholder image as no image URL is provided in response */}
               <img
-                className="w-full h-full"
-                src={result.image}
+                className="w-full h-full object-cover"
+                src={`https://via.placeholder.com/150?text=${result.musicName}`}
                 alt={`Music recommendation ${index + 1}`}
               />
             </div>
@@ -95,15 +88,6 @@ const ResultPage = () => {
         ))}
       </div>
       <div className="relative z-10 mt-10 w-full max-w-4xl px-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-gray-300 p-6 rounded-lg shadow-md">
-          <div className="w-full sm:w-1/3 bg-gray-300">
-            <img
-              className="w-full h-full"
-              src={searchResult[0]?.featuredImage}
-              alt="Featured music"
-            />
-          </div>
-        </div>
         <div className="flex justify-between w-full mt-4">
           <div className="bg-black bg-opacity-80 text-blue-400 text-sm font-bold px-4 py-2 rounded-full">
             음악 설명 by MU-LLaMA
