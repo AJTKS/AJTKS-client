@@ -121,7 +121,7 @@ const MainPage: React.FC = () => {
 
       {isAnalyzing && (
         <div className="fixed inset-0 bg-white bg-opacity-75 flex flex-col justify-center items-center">
-          <img className="w-40 h-40 animate-pulse" src="Group 1.png" alt="" />
+          <img className="w-auto h-40 animate-pulse" src="Group 1.png" alt="" />
           <div
             className="text-center text-black text-2xl font-normal mb-4"
             style={{ fontFamily: "Inter" }}

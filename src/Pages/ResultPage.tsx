@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-// Function to decode Unicode escape sequences
 const decodeUnicode = (str: string) => {
   return str.replace(/\\u[\dA-F]{4}/gi, (match) => {
     return String.fromCharCode(parseInt(match.replace(/\\u/g, ""), 16));
@@ -29,7 +28,6 @@ const ResultPage = () => {
         );
         const { searchResult } = response.data;
 
-        // Decode the search result
         const decodedResult = searchResult.map((result: any) => ({
           ...result,
           musicName: decodeUnicode(result.musicName),
@@ -94,16 +92,16 @@ const ResultPage = () => {
         ))}
       </div>
       <div className="relative z-10 mt-10 w-full max-w-4xl px-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-gray-300 p-6 rounded-lg shadow-md">
-          <div className="w-full sm:w-1/3 bg-gray-300"></div>
-        </div>
         <div className="flex justify-between w-full mt-4">
           <div className="bg-black bg-opacity-80 text-blue-400 text-sm font-bold px-4 py-2 rounded-full">
             음악 설명 by MU-LLaMA
           </div>
-          <div className="bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full">
+          <button
+            className="bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full"
+            onClick={() => navigate("/")}
+          >
             다시 인식하기
-          </div>
+          </button>
         </div>
       </div>
     </div>
