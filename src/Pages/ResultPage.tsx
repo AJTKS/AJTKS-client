@@ -6,35 +6,32 @@ const ResultPage = () => {
   const { searchResult } = location.state || {};
 
   return (
-    <div className="overflow-hidden w-full min-h-screen fixed inset-0">
-      <img
-        className="absolute w-full min-h-screen object-cover"
-        src="Desktop - 9.png"
-        alt="Background"
-      />
+    <div
+      className="relative w-full min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
+      style={{ backgroundImage: 'url("Desktop - 9.png")' }}
+    >
       <div
-        className="absolute left-[660px] top-[550px] text-white text-[20px] font-bold"
+        className="text-white text-2xl font-bold mb-8"
         style={{ fontFamily: "Inter" }}
       >
         추천 음악 목록
       </div>
-      <div className="absolute left-[250.25px] top-[600px] flex items-start justify-start space-x-[20.11px]">
+      <div className="flex flex-wrap justify-center items-start space-x-5">
         {searchResult &&
           searchResult.map((result: any, index: number) => (
             <div
               key={index}
-              className="relative w-[172px] h-[228px] rounded-tl-[38px] overflow-hidden"
+              className="relative w-44 h-56 rounded-tl-xl overflow-hidden m-2"
             >
               <div
-                className="absolute top-0 left-[0.25px] w-full h-full bg-white bg-opacity-60 shadow-[0_0_12.6px_rgba(0,0,0,0.10)] border border-white"
-                style={{ backdropFilter: "blur(36.94px)" }}
+                className="absolute top-0 left-0 w-full h-full bg-white bg-opacity-60 shadow-md border border-white"
+                style={{ backdropFilter: "blur(10px)" }}
               ></div>
-              <div className="absolute top-0 left-[0.36px] w-[172px] h-[172px]">
-                <div className="absolute w-full h-full bg-gray-300"></div>
+              <div className="absolute top-0 left-0 w-full h-44 bg-gray-300">
                 <img
-                  className="w-full h-full"
+                  className="w-full h-full object-cover"
                   src=""
-                  alt={`Card Image ${index + 1}`}
+                  alt={`${result.musicName} 앨범 커버`}
                 />
               </div>
               <div className="absolute bottom-0 w-full bg-black bg-opacity-70 text-white text-center p-2">
@@ -44,15 +41,17 @@ const ResultPage = () => {
             </div>
           ))}
       </div>
-      <div className="absolute left-[250px] top-[63px] w-[1061.44px] h-[430px]">
-        <div className="absolute top-[58px] w-[250px] h-[250px] bg-gray-300">
-          <img className="w-full h-full" src="" alt="Featured Image" />
+      <div className="relative w-full max-w-4xl flex flex-col items-start mt-8">
+        <div className="w-64 h-64 bg-gray-300 mb-4">
+          <img
+            className="w-full h-full object-cover"
+            src=""
+            alt="Featured Image"
+          />
         </div>
-        <div className="absolute left-[270px] top-[126px] flex flex-col items-start space-y-6">
-          <div className="text-center text-black text-[30px] font-bold">
-            NewJeans
-          </div>
-          <div className="text-black text-[16px] leading-[25.6px]">
+        <div className="flex flex-col items-start space-y-4">
+          <div className="text-black text-2xl font-bold">NewJeans</div>
+          <div className="text-black text-lg leading-snug">
             작사 Gigi, Erika de Casier, Fine Glindvad Jensen, 해린(HAERIN)
             <br />
             작곡 FRNK, Frankie Scoca, Erika de Casier, Fine Glindvad Jensen
@@ -60,16 +59,15 @@ const ResultPage = () => {
             편곡 FRNK, Frankie Scoca
           </div>
         </div>
-        <div className="absolute left-0 top-[334px] w-auto h-[35px] pl-[20.72px] pr-[20.72px] pt-[10px] pb-[10px] bg-black bg-opacity-80 rounded-full border border-black flex justify-center items-center space-x-[6.68px]">
-          <div className="text-center text-blue-400 text-[12px] font-bold">
+        <div className="flex justify-between w-full mt-4">
+          <div className="bg-black bg-opacity-80 text-blue-400 text-sm font-bold px-4 py-2 rounded-full">
             음악 설명 by MU-LLaMA
           </div>
-        </div>
-        <div className="absolute right-0 top-0 w-auto h-[38px] px-[20.72px] py-[10px] bg-blue-800 rounded-full flex justify-center items-center">
-          <div className="text-white text-[15px] font-bold">다시 인식하기</div>
+          <div className="bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full">
+            다시 인식하기
+          </div>
         </div>
       </div>
-      <div className="absolute left-[130px] top-[530px] w-[1181.01px] border-t border-white border-opacity-40"></div>
     </div>
   );
 };

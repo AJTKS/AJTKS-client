@@ -8,6 +8,7 @@ const MainPage: React.FC = () => {
   const [fileName, setFileName] = useState<string | null>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -28,7 +29,7 @@ const MainPage: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "https://api.example.com/upload",
+        "https://58.233.143.58:5000/upload",
         formData,
         {
           headers: {
@@ -43,7 +44,7 @@ const MainPage: React.FC = () => {
       const checkTaskStatus = async () => {
         try {
           const statusResponse = await axios.get(
-            `https://api.example.com/task/${task_id}`
+            `https://58.233.143.58:5000/task/${task_id}`
           );
           const { status, searchResult } = statusResponse.data;
 
@@ -63,32 +64,45 @@ const MainPage: React.FC = () => {
     } catch (error) {
       console.error("Error uploading file:", error);
       setIsAnalyzing(false);
+
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 400) {
+          if (error.response.data.error === "No file part") {
+            setError("파일이 전송되지 않았습니다.");
+          } else if (error.response.data.error === "No selected file") {
+            setError("선택된 파일이 없습니다.");
+          } else if (error.response.data.error === "File type not allowed") {
+            setError("허용되지 않는 파일 타입입니다. 가능한 타입: mp3, wav");
+          }
+        }
+      } else {
+        setError("파일 업로드 중 오류가 발생했습니다.");
+      }
     }
   };
 
   return (
-    <div className="overflow-hidden w-full min-h-screen fixed inset-0">
-      <img
-        className="absolute w-full min-h-screen object-cover"
-        src="Desktop - 9.png"
-        alt="Background"
-      />
-      <div className="absolute left-[342.51px] top-[458px] w-[820px] h-[107px] flex justify-center items-center">
-        <div
-          className="text-white text-[62px] font-normal break-words"
-          style={{ fontFamily: "Inter" }}
-        >
-          알아서 잘 딱 깔끔하게 센스있게
-        </div>
+    <div
+      className="relative w-full min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
+      style={{ backgroundImage: 'url("Desktop - 9.png")' }}
+    >
+      <div
+        className="text-white text-5xl font-normal"
+        style={{ fontFamily: "Inter" }}
+      >
+        알아서 잘 딱 깔끔하게 센스있게
       </div>
-      <div className="absolute left-[457.51px] top-[583px] w-[589px] flex flex-col justify-center items-center text-gray-300 text-[22px] font-normal break-words">
+      <div
+        className="text-gray-300 text-2xl font-normal text-center mt-6"
+        style={{ fontFamily: "Inter" }}
+      >
         Input the Audio, and then wait for our recommendation!
         <br />
         <UploadButton onDrop={onDrop} />
       </div>
 
       {showConfirmation && (
-        <div className="absolute inset-0 bg-white bg-opacity-75 flex justify-center items-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-4 rounded shadow-lg text-center">
             <p className="mb-4">"{fileName}"을(를) 업로드 하시겠습니까?</p>
             <button
@@ -107,18 +121,32 @@ const MainPage: React.FC = () => {
         </div>
       )}
 
+      {error && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-4 rounded shadow-lg text-center">
+            <p className="mb-4">{error}</p>
+            <button
+              className="bg-red-500 text-white py-2 px-4 rounded"
+              onClick={() => setError(null)}
+            >
+              닫기
+            </button>
+          </div>
+        </div>
+      )}
+
       {isAnalyzing && (
-        <div className="absolute inset-0 bg-white bg-opacity-75 flex justify-center items-center">
+        <div className="fixed inset-0 bg-white bg-opacity-75 flex justify-center items-center">
           <div
-            className="text-center text-black text-[35px] font-normal"
+            className="text-center text-black text-3xl font-normal"
             style={{ fontFamily: "Inter" }}
           >
             분석 중입니다...
           </div>
           <img
-            className="w-[391px] h-[351.90px]"
+            className="w-96 h-96"
             src="1c06fef0a28189bbd6e4e04ddb5ac6a6.png"
-            alt="Analysis"
+            alt="Analyzing"
           />
         </div>
       )}
