@@ -29,7 +29,7 @@ const MainPage: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://58.233.143.58:5000/upload",
+        "https://58.233.143.58:5000/upload",
         formData,
         {
           headers: {
@@ -44,7 +44,7 @@ const MainPage: React.FC = () => {
       const checkTaskStatus = async () => {
         try {
           const statusResponse = await axios.get(
-            `http://58.233.143.58:5000/task/${task_id}`
+            `https://58.233.143.58:5000/task/${task_id}`
           );
           const { status, searchResult } = statusResponse.data;
 
