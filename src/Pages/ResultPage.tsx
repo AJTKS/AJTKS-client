@@ -17,7 +17,13 @@ const ResultPage = () => {
         const { status, searchResult } = response.data;
 
         if (status === "completed") {
-          setSearchResult(searchResult);
+          // Decode the search result
+          const decodedResult = searchResult.map((result: any) => ({
+            ...result,
+            musicName: decodeURIComponent(escape(result.musicName)),
+            singer: decodeURIComponent(escape(result.singer)),
+          }));
+          setSearchResult(decodedResult);
         } else {
           setTimeout(fetchResult, 3000);
         }
@@ -82,6 +88,12 @@ const ResultPage = () => {
                 src={result.image}
                 alt={`Music recommendation ${index + 1}`}
               />
+            </div>
+            <div className="p-2">
+              <div className="text-black text-sm font-bold">
+                {result.musicName}
+              </div>
+              <div className="text-gray-700 text-xs">{result.singer}</div>
             </div>
           </div>
         ))}
