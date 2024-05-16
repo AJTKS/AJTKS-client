@@ -40,7 +40,10 @@ const MainPage: React.FC = () => {
 
       const { task_id } = response.data;
       console.log("File uploaded successfully, task ID:", task_id);
-      navigate(`/result/${task_id}`);
+
+      setTimeout(() => {
+        navigate("/result", { state: { taskId: task_id } });
+      }, 2000);
     } catch (error) {
       console.error("Error uploading file:", error);
       setIsAnalyzing(false);

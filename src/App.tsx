@@ -8,7 +8,7 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/result/:task_id" element={<ResultPage />} />
+        <Route path="/result" element={<ResultPage />} />
       </Routes>
     </Router>
   );

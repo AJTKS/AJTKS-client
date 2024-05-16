@@ -1,23 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ResultPage = () => {
-  const { task_id } = useParams<{ task_id: string }>();
+  const location = useLocation();
+  const { taskId } = location.state || {};
   const [searchResult, setSearchResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!taskId) {
+      setError("Task ID가 제공되지 않았습니다.");
+      return;
+    }
+
     const fetchResult = async () => {
       try {
         const response = await axios.get(
-          `https://ajtksbackend.p-e.kr/task/${task_id}`
+          `https://ajtksbackend.p-e.kr/task/${taskId}`
         );
         const { status, searchResult } = response.data;
 
         if (status === "completed") {
-          setSearchResult(searchResult);
+          // Decode the search result
+          const decodedResult = searchResult.map((result: any) => ({
+            ...result,
+            musicName: decodeURIComponent(escape(result.musicName)),
+            singer: decodeURIComponent(escape(result.singer)),
+          }));
+          setSearchResult(decodedResult);
         } else {
           setTimeout(fetchResult, 3000);
         }
@@ -28,7 +40,7 @@ const ResultPage = () => {
     };
 
     fetchResult();
-  }, [task_id]);
+  }, [taskId]);
 
   if (error) {
     return (
@@ -47,17 +59,7 @@ const ResultPage = () => {
   }
 
   if (!searchResult) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75">
-        <img className="w-40 h-40 animate-pulse" src="Group 1.png" alt="" />
-        <div
-          className="text-center text-black text-2xl font-normal mb-4"
-          style={{ fontFamily: "Inter" }}
-        >
-          분석 중입니다...
-        </div>
-      </div>
-    );
+    return null; // Don't show anything while loading
   }
 
   return (
@@ -82,6 +84,12 @@ const ResultPage = () => {
                 src={result.image}
                 alt={`Music recommendation ${index + 1}`}
               />
+            </div>
+            <div className="p-2">
+              <div className="text-black text-sm font-bold">
+                {result.musicName}
+              </div>
+              <div className="text-gray-700 text-xs">{result.singer}</div>
             </div>
           </div>
         ))}
