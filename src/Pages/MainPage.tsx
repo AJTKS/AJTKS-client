@@ -40,27 +40,7 @@ const MainPage: React.FC = () => {
 
       const { task_id } = response.data;
       console.log("File uploaded successfully, task ID:", task_id);
-
-      const checkTaskStatus = async () => {
-        try {
-          const statusResponse = await axios.get(
-            `https://ajtksbackend.p-e.kr/task/${task_id}`
-          );
-          const { status, searchResult } = statusResponse.data;
-
-          if (status === "completed") {
-            navigate("/result", { state: { searchResult } });
-            setIsAnalyzing(false);
-          } else {
-            setTimeout(checkTaskStatus, 3000);
-          }
-        } catch (error) {
-          console.error("Error checking task status:", error);
-          setIsAnalyzing(false);
-        }
-      };
-
-      checkTaskStatus();
+      navigate(`/result/${task_id}`);
     } catch (error) {
       console.error("Error uploading file:", error);
       setIsAnalyzing(false);
