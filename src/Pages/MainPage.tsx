@@ -96,7 +96,9 @@ const MainPage: React.FC = () => {
         className="text-gray-300 text-2xl font-normal text-center mt-6 flex flex-col items-center"
         style={{ fontFamily: "Inter" }}
       >
-        <div>Input the Audio, and then wait for our recommendation!</div>
+        <div className="mb-4">
+          Input the Audio, and then wait for our recommendation!
+        </div>
         <UploadButton onDrop={onDrop} />
       </div>
 
@@ -136,13 +138,13 @@ const MainPage: React.FC = () => {
 
       {isAnalyzing && (
         <div className="fixed inset-0 bg-white bg-opacity-75 flex flex-col justify-center items-center">
+          <img className="w-40 h-40 animate-pulse" src="Group 1.png" alt="" />
           <div
             className="text-center text-black text-2xl font-normal mb-4"
             style={{ fontFamily: "Inter" }}
           >
             분석 중입니다...
           </div>
-          <img className="w-96 h-96 animate-pulse" src="Group 1.png" alt="" />
         </div>
       )}
     </div>
