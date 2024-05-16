@@ -93,11 +93,10 @@ const MainPage: React.FC = () => {
         알아서 잘 딱 깔끔하게 센스있게
       </div>
       <div
-        className="text-gray-300 text-2xl font-normal text-center mt-6"
+        className="text-gray-300 text-2xl font-normal text-center mt-6 flex flex-col items-center"
         style={{ fontFamily: "Inter" }}
       >
-        Input the Audio, and then wait for our recommendation!
-        <br />
+        <div>Input the Audio, and then wait for our recommendation!</div>
         <UploadButton onDrop={onDrop} />
       </div>
 
