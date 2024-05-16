@@ -1,6 +1,10 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 const ResultPage = () => {
+  const location = useLocation();
+  const { searchResult } = location.state || {};
+
   return (
     <div className="overflow-hidden w-full min-h-screen fixed inset-0">
       <img
@@ -15,26 +19,30 @@ const ResultPage = () => {
         추천 음악 목록
       </div>
       <div className="absolute left-[250.25px] top-[600px] flex items-start justify-start space-x-[20.11px]">
-        {/* Cards Repeated with Different Contents */}
-        {Array.from({ length: 5 }).map((_, index) => (
-          <div
-            key={index}
-            className="relative w-[172px] h-[228px] rounded-tl-[38px] overflow-hidden"
-          >
+        {searchResult &&
+          searchResult.map((result: any, index: number) => (
             <div
-              className="absolute top-0 left-[0.25px] w-full h-full bg-white bg-opacity-60 shadow-[0_0_12.6px_rgba(0,0,0,0.10)] border border-white"
-              style={{ backdropFilter: "blur(36.94px)" }}
-            ></div>
-            <div className="absolute top-0 left-[0.36px] w-[172px] h-[172px]">
-              <div className="absolute w-full h-full bg-gray-300"></div>
-              <img
-                className="w-full h-full"
-                src=""
-                alt={`Card Image ${index + 1}`}
-              />
+              key={index}
+              className="relative w-[172px] h-[228px] rounded-tl-[38px] overflow-hidden"
+            >
+              <div
+                className="absolute top-0 left-[0.25px] w-full h-full bg-white bg-opacity-60 shadow-[0_0_12.6px_rgba(0,0,0,0.10)] border border-white"
+                style={{ backdropFilter: "blur(36.94px)" }}
+              ></div>
+              <div className="absolute top-0 left-[0.36px] w-[172px] h-[172px]">
+                <div className="absolute w-full h-full bg-gray-300"></div>
+                <img
+                  className="w-full h-full"
+                  src=""
+                  alt={`Card Image ${index + 1}`}
+                />
+              </div>
+              <div className="absolute bottom-0 w-full bg-black bg-opacity-70 text-white text-center p-2">
+                <div className="text-sm">{result.musicName}</div>
+                <div className="text-xs">{result.singer}</div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
       <div className="absolute left-[250px] top-[63px] w-[1061.44px] h-[430px]">
         <div className="absolute top-[58px] w-[250px] h-[250px] bg-gray-300">

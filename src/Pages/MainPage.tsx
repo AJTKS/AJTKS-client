@@ -5,38 +5,66 @@ import { useNavigate } from "react-router-dom";
 
 const MainPage: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [fileName, setFileName] = useState<string | null>(null);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
   const navigate = useNavigate();
 
-  const onDrop = useCallback(
-    async (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
-      const formData = new FormData();
-      formData.append("file", file);
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    const selectedFile = acceptedFiles[0];
+    setFileName(selectedFile.name);
+    setFile(selectedFile);
+    setShowConfirmation(true);
+  }, []);
 
-      setIsAnalyzing(true); // Start analyzing
-      try {
-        const response = await axios.post(
-          "https://api.example.com/upload",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
+  const handleUpload = async () => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    setIsAnalyzing(true);
+    setShowConfirmation(false);
+
+    try {
+      const response = await axios.post(
+        "https://api.example.com/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      const { task_id } = response.data;
+      console.log("File uploaded successfully, task ID:", task_id);
+
+      const checkTaskStatus = async () => {
+        try {
+          const statusResponse = await axios.get(
+            `https://api.example.com/task/${task_id}`
+          );
+          const { status, searchResult } = statusResponse.data;
+
+          if (status === "completed") {
+            navigate("/result", { state: { searchResult } });
+            setIsAnalyzing(false);
+          } else {
+            setTimeout(checkTaskStatus, 3000);
           }
-        );
-        console.log("File uploaded successfully:", response.data);
-
-        setTimeout(() => {
+        } catch (error) {
+          console.error("Error checking task status:", error);
           setIsAnalyzing(false);
-          navigate("/result");
-        }, 10000);
-      } catch (error) {
-        console.error("Error uploading file:", error);
-        setIsAnalyzing(false);
-      }
-    },
-    [navigate]
-  );
+        }
+      };
+
+      checkTaskStatus();
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      setIsAnalyzing(false);
+    }
+  };
 
   return (
     <div className="overflow-hidden w-full min-h-screen fixed inset-0">
@@ -58,6 +86,26 @@ const MainPage: React.FC = () => {
         <br />
         <UploadButton onDrop={onDrop} />
       </div>
+
+      {showConfirmation && (
+        <div className="absolute inset-0 bg-white bg-opacity-75 flex justify-center items-center">
+          <div className="bg-white p-4 rounded shadow-lg text-center">
+            <p className="mb-4">"{fileName}"을(를) 업로드 하시겠습니까?</p>
+            <button
+              className="bg-green-500 text-white py-2 px-4 rounded mr-2"
+              onClick={handleUpload}
+            >
+              확인
+            </button>
+            <button
+              className="bg-red-500 text-white py-2 px-4 rounded"
+              onClick={() => setShowConfirmation(false)}
+            >
+              취소
+            </button>
+          </div>
+        </div>
+      )}
 
       {isAnalyzing && (
         <div className="absolute inset-0 bg-white bg-opacity-75 flex justify-center items-center">

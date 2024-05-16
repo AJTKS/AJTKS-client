@@ -14,7 +14,6 @@ const UploadButton: React.FC<UploadButtonProps> = ({ onDrop }) => {
 
   return (
     <div className="relative w-[200px] h-[60px] bg-green-500 flex justify-center items-center">
-      {" "}
       <div
         {...getRootProps()}
         className="flex justify-center items-center w-full h-full text-white text-lg font-normal cursor-pointer"
