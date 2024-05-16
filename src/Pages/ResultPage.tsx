@@ -2,6 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+// Function to decode Unicode escape sequences
+const decodeUnicode = (str: string) => {
+  return str.replace(/\\u[\dA-F]{4}/gi, (match) => {
+    return String.fromCharCode(parseInt(match.replace(/\\u/g, ""), 16));
+  });
+};
+
 const ResultPage = () => {
   const location = useLocation();
   const { taskId } = location.state || {};
@@ -25,8 +32,8 @@ const ResultPage = () => {
         // Decode the search result
         const decodedResult = searchResult.map((result: any) => ({
           ...result,
-          musicName: decodeURIComponent(escape(result.musicName)),
-          singer: decodeURIComponent(escape(result.singer)),
+          musicName: decodeUnicode(result.musicName),
+          singer: decodeUnicode(result.singer),
         }));
         setSearchResult(decodedResult);
       } catch (error) {
@@ -71,31 +78,30 @@ const ResultPage = () => {
             className="relative w-[172px] h-[228px] rounded-tl-[38px] overflow-hidden bg-white bg-opacity-60 shadow-md border border-white backdrop-blur-md"
           >
             <div className="w-full h-[172px] bg-gray-300">
-              {/* Placeholder image as no image URL is provided in response */}
               <img
-                className="w-full h-full object-cover"
-                src={`https://via.placeholder.com/150?text=${result.musicName}`}
+                className="w-full h-full"
+                src={`path-to-image-${index + 1}.jpg`}
                 alt={`Music recommendation ${index + 1}`}
               />
             </div>
             <div className="p-2">
-              <div className="text-black text-sm font-bold">
+              <div className="text-black text-lg font-bold">
                 {result.musicName}
               </div>
-              <div className="text-gray-700 text-xs">{result.singer}</div>
+              <div className="text-gray-700 text-sm">{result.singer}</div>
             </div>
           </div>
         ))}
       </div>
       <div className="relative z-10 mt-10 w-full max-w-4xl px-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-gray-300 p-6 rounded-lg shadow-md">
+          <div className="w-full sm:w-1/3 bg-gray-300"></div>
+        </div>
         <div className="flex justify-between w-full mt-4">
           <div className="bg-black bg-opacity-80 text-blue-400 text-sm font-bold px-4 py-2 rounded-full">
             음악 설명 by MU-LLaMA
           </div>
-          <div
-            className="bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full cursor-pointer"
-            onClick={() => navigate("/")}
-          >
+          <div className="bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full">
             다시 인식하기
           </div>
         </div>
