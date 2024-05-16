@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import axios from "axios";
 import UploadButton from "../Components/UploadButton";
 import { useNavigate } from "react-router-dom";
@@ -9,18 +9,7 @@ const MainPage: React.FC = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [loadingDots, setLoadingDots] = useState("");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isAnalyzing) {
-      interval = setInterval(() => {
-        setLoadingDots((prev) => (prev.length < 5 ? prev + "." : ""));
-      }, 500);
-    }
-    return () => clearInterval(interval);
-  }, [isAnalyzing]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const selectedFile = acceptedFiles[0];
@@ -151,13 +140,9 @@ const MainPage: React.FC = () => {
             className="text-center text-black text-2xl font-normal mb-4"
             style={{ fontFamily: "Inter" }}
           >
-            분석 중입니다{loadingDots}
+            분석 중입니다...
           </div>
-          <img
-            className="w-96 h-96 animate-pulse"
-            src="1c06fef0a28189bbd6e4e04ddb5ac6a6.png"
-            alt=""
-          />
+          <img className="w-96 h-96 animate-pulse" src="Group 1.png" alt="" />
         </div>
       )}
     </div>
