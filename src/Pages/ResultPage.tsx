@@ -5,7 +5,7 @@ const ResultPage = () => {
     <div className="overflow-hidden w-full min-h-screen fixed inset-0">
       <img
         className="absolute w-full min-h-screen object-cover"
-        src="Desktop - 8.png"
+        src="Desktop - 9.png"
         alt="Background"
       />
       <div
