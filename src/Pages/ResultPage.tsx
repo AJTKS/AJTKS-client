@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useMediaQuery } from "react-responsive";
@@ -84,7 +84,7 @@ const ResultPage: React.FC = () => {
         </button>
       </div>
       <div className="relative w-full max-w-4xl px-4 text-center mt-10">
-        <div className="relative z-10 text-white text-[20px] font-bold">
+        <div className="relative z-10 text-white text-3xl md:text-4xl font-bold">
           추천 음악 목록
         </div>
       </div>

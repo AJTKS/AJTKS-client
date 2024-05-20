@@ -72,13 +72,13 @@ const MainPage: React.FC = () => {
       style={{ backgroundImage: 'url("Desktop - 9.svg")' }}
     >
       <div
-        className="text-white text-5xl font-normal text-center px-4"
+        className="text-white text-3xl md:text-5xl font-normal text-center px-4"
         style={{ fontFamily: "Inter" }}
       >
         알아서 잘 딱 깔끔하게 센스있게
       </div>
       <div
-        className="text-gray-300 text-2xl font-normal text-center mt-6 flex flex-col items-center px-4"
+        className="text-gray-300 text-xl md:text-2xl font-normal text-center mt-6 flex flex-col items-center px-4"
         style={{ fontFamily: "Inter" }}
       >
         <div className="mb-4">
@@ -90,18 +90,18 @@ const MainPage: React.FC = () => {
       {showConfirmation && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-4 rounded shadow-lg text-center">
-            <p className="mb-4">Are you sure you want to upload {fileName}?</p>
+            <p className="mb-4">"{fileName}"을(를) 업로드 하시겠습니까?</p>
             <button
               className="bg-green-500 text-white py-2 px-4 rounded mr-2"
               onClick={handleUpload}
             >
-              Confirm
+              확인
             </button>
             <button
               className="bg-red-500 text-white py-2 px-4 rounded"
               onClick={() => setShowConfirmation(false)}
             >
-              Cancel
+              취소
             </button>
           </div>
         </div>
@@ -115,7 +115,7 @@ const MainPage: React.FC = () => {
               className="bg-red-500 text-white py-2 px-4 rounded"
               onClick={() => setError(null)}
             >
-              Close
+              닫기
             </button>
           </div>
         </div>
@@ -128,7 +128,7 @@ const MainPage: React.FC = () => {
             className="text-center text-black text-2xl font-normal mb-4"
             style={{ fontFamily: "Inter" }}
           >
-            Analyzing...
+            분석 중입니다...
           </div>
         </div>
       )}
