@@ -33,7 +33,8 @@ const ResultPage: React.FC = () => {
           return;
         }
 
-        const decodedResult = data.searchResult.map((result: any) => ({
+        const decodedResult = (data.searchResult || []).map((result: any) => ({
+
           ...result,
           musicName: decodeUnicode(result.musicName),
           singer: decodeUnicode(result.singer),
