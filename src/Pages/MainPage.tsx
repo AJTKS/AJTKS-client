@@ -40,7 +40,10 @@ const MainPage: React.FC = () => {
 
       const { task_id } = response.data;
       console.log("File uploaded successfully, task ID:", task_id);
-      navigate(`/result/${task_id}`);
+
+      setTimeout(() => {
+        navigate("/result", { state: { taskId: task_id } });
+      }, 2000);
     } catch (error) {
       console.error("Error uploading file:", error);
       setIsAnalyzing(false);
@@ -119,6 +122,7 @@ const MainPage: React.FC = () => {
       {isAnalyzing && (
         <div className="fixed inset-0 bg-white bg-opacity-75 flex flex-col justify-center items-center">
           <img className="w-auto h-40 animate-pulse" src="Group 1.svg" alt="" />
+
           <div
             className="text-center text-black text-2xl font-normal mb-4"
             style={{ fontFamily: "Inter" }}
