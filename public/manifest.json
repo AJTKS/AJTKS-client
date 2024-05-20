@@ -3,7 +3,7 @@
   "name": "Input the Audio, and then wait for our recommendation!",
   "icons": [
     {
-      "src": "Group 1.png",
+      "src": ".png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }
