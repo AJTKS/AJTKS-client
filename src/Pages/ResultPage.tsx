@@ -8,7 +8,7 @@ const decodeUnicode = (str: string) => {
   });
 };
 
-const ResultPage = () => {
+const ResultPage: React.FC = () => {
   const location = useLocation();
   const { taskId } = location.state || {};
   const [searchResult, setSearchResult] = useState<any[]>([]);
@@ -32,6 +32,9 @@ const ResultPage = () => {
           ...result,
           musicName: decodeUnicode(result.musicName),
           singer: decodeUnicode(result.singer),
+          albumArt: result.albumArt
+            ? `https://ajtksbackend.p-e.kr/album_arts/${result.albumArt}`
+            : null,
         }));
         setSearchResult(decodedResult);
       } catch (error) {
@@ -76,11 +79,17 @@ const ResultPage = () => {
             className="relative w-[172px] h-[228px] rounded-tl-[38px] overflow-hidden bg-white bg-opacity-60 shadow-md border border-white backdrop-blur-md"
           >
             <div className="w-full h-[172px] bg-gray-300">
-              <img
-                className="w-full h-full"
-                src={`path-to-image-${index + 1}.jpg`}
-                alt={`Music recommendation ${index + 1}`}
-              />
+              {result.albumArt ? (
+                <img
+                  className="w-full h-full object-cover"
+                  src={result.albumArt}
+                  alt={`Album art for ${result.musicName}`}
+                />
+              ) : (
+                <div className="flex items-center justify-center h-full text-gray-500">
+                  No Image
+                </div>
+              )}
             </div>
             <div className="p-2">
               <div className="text-black text-lg font-bold">
@@ -97,7 +106,7 @@ const ResultPage = () => {
             음악 설명 by MU-LLaMA
           </div>
           <button
-            className="bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full"
+            className="bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full transition duration-200 ease-in-out hover:bg-blue-700 active:bg-blue-900 active:scale-95"
             onClick={() => navigate("/")}
           >
             다시 인식하기
