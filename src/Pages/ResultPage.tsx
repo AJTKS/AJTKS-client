@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -14,6 +14,15 @@ const ResultPage: React.FC = () => {
   const [searchResult, setSearchResult] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+
+  const textRef = useRef<HTMLDivElement>(null);
+
+  const checkOverflow = (element: HTMLElement | null) => {
+    if (element) {
+      return element.scrollWidth > element.clientWidth;
+    }
+    return false;
+  };
 
   useEffect(() => {
     if (!taskId) {
@@ -73,16 +82,18 @@ const ResultPage: React.FC = () => {
       className="overflow-hidden w-full min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
       style={{ backgroundImage: 'url("Desktop - 9.svg")' }}
     >
-      <div className="absolute top-0 right-0 m-4">
-        <button
-          className="bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full transition duration-200 ease-in-out hover:bg-blue-700 active:bg-blue-900 active:scale-95"
-          onClick={() => navigate("/")}
-        >
-          다시 인식하기
-        </button>
-      </div>
-      <div className="relative z-10 text-white text-[20px] font-bold mt-10">
-        추천 음악 목록
+      <div className="relative w-full max-w-4xl px-4">
+        <div className="flex justify-between items-center w-full mt-10">
+          <div className="relative z-10 text-white text-[20px] font-bold">
+            추천 음악 목록
+          </div>
+          <button
+            className="bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full transition duration-200 ease-in-out hover:bg-blue-700 active:bg-blue-900 active:scale-95"
+            onClick={() => navigate("/")}
+          >
+            다시 인식하기
+          </button>
+        </div>
       </div>
       <div className="relative z-10 mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4">
         {searchResult.map((result, index) => (
@@ -104,15 +115,37 @@ const ResultPage: React.FC = () => {
               )}
             </div>
             <div className="p-2 flex flex-col justify-between h-[120px]">
-              <div className="relative flex overflow-x-hidden">
-                <div className="animate-marquee whitespace-nowrap">
+              <div
+                ref={textRef}
+                className={`relative ${
+                  checkOverflow(textRef.current) ? "flex overflow-x-hidden" : ""
+                }`}
+              >
+                <div
+                  className={`${
+                    checkOverflow(textRef.current)
+                      ? "animate-marquee whitespace-nowrap"
+                      : ""
+                  }`}
+                >
                   <span className="text-black text-lg font-bold mx-4">
                     {result.musicName}
                   </span>
                 </div>
               </div>
-              <div className="relative flex overflow-x-hidden">
-                <div className="animate-marquee whitespace-nowrap">
+              <div
+                ref={textRef}
+                className={`relative ${
+                  checkOverflow(textRef.current) ? "flex overflow-x-hidden" : ""
+                }`}
+              >
+                <div
+                  className={`${
+                    checkOverflow(textRef.current)
+                      ? "animate-marquee whitespace-nowrap"
+                      : ""
+                  }`}
+                >
                   <span className="text-gray-700 text-sm mx-4">
                     {result.singer}
                   </span>
