@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./marquee.css"; // Make sure to create this CSS file for the marquee effect
 
 const decodeUnicode = (str: string) => {
   return str.replace(/\\u[\dA-F]{4}/gi, (match) => {
@@ -33,13 +34,12 @@ const ResultPage: React.FC = () => {
           return;
         }
 
-        const decodedResult = (data.searchResult || []).map((result: any) => ({
-
+        const decodedResult = data.searchResult.map((result: any) => ({
           ...result,
           musicName: decodeUnicode(result.musicName),
           singer: decodeUnicode(result.singer),
           albumArt: result.albumArt
-            ? `https://ajtksbackend.p-e.kr/album_arts/${result.albumArt}`
+            ? `https://ajtksbackend.p-e.kr/${result.albumArt}`
             : null,
         }));
 
@@ -79,11 +79,11 @@ const ResultPage: React.FC = () => {
       <div className="relative z-10 text-white text-[20px] font-bold mt-10">
         추천 음악 목록
       </div>
-      <div className="relative z-10 mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4">
+      <div className="relative z-10 mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4">
         {searchResult.map((result, index) => (
           <div
             key={index}
-            className="relative w-[200px] h-[300px] rounded-tl-[38px] overflow-hidden bg-white bg-opacity-60 shadow-md border border-white backdrop-blur-md"
+            className="relative w-[220px] h-[320px] rounded-tl-[38px] overflow-hidden bg-white bg-opacity-60 shadow-md border border-white backdrop-blur-md"
           >
             <div className="w-full h-[200px] bg-gray-300">
               {result.albumArt ? (
@@ -98,12 +98,16 @@ const ResultPage: React.FC = () => {
                 </div>
               )}
             </div>
-            <div className="p-2 flex flex-col justify-between h-[100px]">
-              <div className="text-black text-lg font-bold truncate">
-                {result.musicName}
+            <div className="p-2 flex flex-col justify-between h-[120px]">
+              <div className="text-black text-lg font-bold overflow-hidden whitespace-nowrap relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="marquee">{result.musicName}</span>
+                </div>
               </div>
-              <div className="text-gray-700 text-sm truncate">
-                {result.singer}
+              <div className="text-gray-700 text-sm overflow-hidden whitespace-nowrap relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="marquee">{result.singer}</span>
+                </div>
               </div>
             </div>
           </div>
