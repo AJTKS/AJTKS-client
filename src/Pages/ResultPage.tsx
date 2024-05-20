@@ -60,7 +60,7 @@ const ResultPage: React.FC = () => {
           musicName: decodeUnicode(result.musicName),
           singer: decodeUnicode(result.singer),
           albumArt: result.albumArt
-            ? `https://ajtksbackend.p-e.kr/album_arts/${result.albumArt}`
+            ? `https://ajtksbackend.p-e.kr/${result.albumArt}`
             : null,
         }));
 
