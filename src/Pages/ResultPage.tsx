@@ -17,7 +17,6 @@ const ResultPage = () => {
         const { status, searchResult } = response.data;
 
         if (status === "completed") {
-          // Decode the search result
           const decodedResult = searchResult.map((result: any) => ({
             ...result,
             musicName: decodeURIComponent(escape(result.musicName)),
@@ -113,7 +112,7 @@ const ResultPage = () => {
             음악 설명 by MU-LLaMA
           </div>
           <div
-            className="bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full cursor-pointer"
+            className="bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full cursor-pointer transition duration-200 ease-in-out hover:bg-blue-700 active:bg-blue-900 active:scale-95"
             onClick={() => navigate("/")}
           >
             다시 인식하기
