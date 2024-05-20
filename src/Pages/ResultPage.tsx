@@ -26,13 +26,19 @@ const ResultPage = () => {
         const response = await axios.get(
           `https://ajtksbackend.p-e.kr/task/${taskId}`
         );
-        const { searchResult } = response.data;
+        const data = response.data;
 
-        const decodedResult = searchResult.map((result: any) => ({
+        if (!data || !data.searchResult) {
+          setError("결과 데이터가 없습니다.");
+          return;
+        }
+
+        const decodedResult = data.searchResult.map((result: any) => ({
           ...result,
           musicName: decodeUnicode(result.musicName),
           singer: decodeUnicode(result.singer),
         }));
+
         setSearchResult(decodedResult);
       } catch (error) {
         console.error("Error fetching task status:", error);
