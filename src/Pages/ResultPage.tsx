@@ -63,7 +63,7 @@ const ResultPage = () => {
     <div className="overflow-hidden w-full min-h-screen fixed inset-0 flex flex-col items-center justify-center">
       <img
         className="absolute w-full min-h-screen object-cover"
-        src="Desktop - 9.png"
+        src="Desktop - 9.svg"
         alt="Background"
       />
       <div className="relative z-10 text-white text-[20px] font-bold mt-10">

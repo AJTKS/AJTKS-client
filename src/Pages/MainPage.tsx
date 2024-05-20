@@ -67,7 +67,7 @@ const MainPage: React.FC = () => {
   return (
     <div
       className="relative w-full min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
-      style={{ backgroundImage: 'url("Desktop - 9.png")' }}
+      style={{ backgroundImage: 'url("Desktop - 9.svg")' }}
     >
       <div
         className="text-white text-5xl font-normal"
@@ -121,7 +121,8 @@ const MainPage: React.FC = () => {
 
       {isAnalyzing && (
         <div className="fixed inset-0 bg-white bg-opacity-75 flex flex-col justify-center items-center">
-          <img className="w-auto h-40 animate-pulse" src="Group 1.png" alt="" />
+          <img className="w-auto h-40 animate-pulse" src="Group 1.svg" alt="" />
+
           <div
             className="text-center text-black text-2xl font-normal mb-4"
             style={{ fontFamily: "Inter" }}
