@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import axios from "axios";
 import UploadButton from "../Components/UploadButton";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 const MainPage: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -10,6 +11,7 @@ const MainPage: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const selectedFile = acceptedFiles[0];
@@ -43,7 +45,7 @@ const MainPage: React.FC = () => {
 
       setTimeout(() => {
         navigate("/result", { state: { taskId: task_id } });
-      }, 3000);
+      }, 2000);
     } catch (error) {
       console.error("Error uploading file:", error);
       setIsAnalyzing(false);
@@ -70,13 +72,13 @@ const MainPage: React.FC = () => {
       style={{ backgroundImage: 'url("Desktop - 9.svg")' }}
     >
       <div
-        className="text-white text-5xl font-normal"
+        className="text-white text-5xl font-normal text-center px-4"
         style={{ fontFamily: "Inter" }}
       >
         알아서 잘 딱 깔끔하게 센스있게
       </div>
       <div
-        className="text-gray-300 text-2xl font-normal text-center mt-6 flex flex-col items-center"
+        className="text-gray-300 text-2xl font-normal text-center mt-6 flex flex-col items-center px-4"
         style={{ fontFamily: "Inter" }}
       >
         <div className="mb-4">
@@ -86,48 +88,47 @@ const MainPage: React.FC = () => {
       </div>
 
       {showConfirmation && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-4 rounded shadow-lg text-center">
-            <p className="mb-4">"{fileName}"을(를) 업로드 하시겠습니까?</p>
+            <p className="mb-4">Are you sure you want to upload {fileName}?</p>
             <button
               className="bg-green-500 text-white py-2 px-4 rounded mr-2"
               onClick={handleUpload}
             >
-              확인
+              Confirm
             </button>
             <button
               className="bg-red-500 text-white py-2 px-4 rounded"
               onClick={() => setShowConfirmation(false)}
             >
-              취소
+              Cancel
             </button>
           </div>
         </div>
       )}
 
       {error && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-4 rounded shadow-lg text-center">
             <p className="mb-4">{error}</p>
             <button
               className="bg-red-500 text-white py-2 px-4 rounded"
               onClick={() => setError(null)}
             >
-              닫기
+              Close
             </button>
           </div>
         </div>
       )}
 
       {isAnalyzing && (
-        <div className="fixed inset-0 bg-white bg-opacity-75 flex flex-col justify-center items-center">
+        <div className="fixed inset-0 bg-white bg-opacity-75 flex flex-col items-center justify-center">
           <img className="w-auto h-40 animate-pulse" src="Group 1.svg" alt="" />
-
           <div
             className="text-center text-black text-2xl font-normal mb-4"
             style={{ fontFamily: "Inter" }}
           >
-            분석 중입니다...
+            Analyzing...
           </div>
         </div>
       )}

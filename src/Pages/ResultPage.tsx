@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useMediaQuery } from "react-responsive";
 
 const decodeUnicode = (str: string) => {
   return str.replace(/\\u[\dA-F]{4}/gi, (match) => {
@@ -14,15 +15,7 @@ const ResultPage: React.FC = () => {
   const [searchResult, setSearchResult] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-
-  const textRef = useRef<HTMLDivElement>(null);
-
-  const checkOverflow = (element: HTMLElement | null) => {
-    if (element) {
-      return element.scrollWidth > element.clientWidth;
-    }
-    return false;
-  };
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
   useEffect(() => {
     if (!taskId) {
@@ -82,24 +75,30 @@ const ResultPage: React.FC = () => {
       className="overflow-hidden w-full min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
       style={{ backgroundImage: 'url("Desktop - 9.svg")' }}
     >
-      <div className="relative w-full max-w-4xl px-4">
-        <div className="flex justify-between items-center w-full mt-10">
-          <div className="relative z-10 text-white text-[20px] font-bold">
-            추천 음악 목록
-          </div>
-          <button
-            className="bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full transition duration-200 ease-in-out hover:bg-blue-700 active:bg-blue-900 active:scale-95"
-            onClick={() => navigate("/")}
-          >
-            다시 인식하기
-          </button>
+      <div className="absolute top-0 right-0 m-4">
+        <button
+          className="bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full transition duration-200 ease-in-out hover:bg-blue-700 active:bg-blue-900 active:scale-95"
+          onClick={() => navigate("/")}
+        >
+          다시 인식하기
+        </button>
+      </div>
+      <div className="relative w-full max-w-4xl px-4 text-center mt-10">
+        <div className="relative z-10 text-white text-[20px] font-bold">
+          추천 음악 목록
         </div>
       </div>
-      <div className="relative z-10 mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4">
+      <div
+        className={`relative z-10 mt-4 ${
+          isMobile
+            ? "flex overflow-x-auto space-x-4 px-4"
+            : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4"
+        }`}
+      >
         {searchResult.map((result, index) => (
           <div
             key={index}
-            className="relative w-[220px] h-[320px] rounded-tl-[38px] overflow-hidden bg-white bg-opacity-60 shadow-md border border-white backdrop-blur-md"
+            className="relative w-[220px] h-[320px] rounded-tl-[38px] overflow-hidden bg-white bg-opacity-60 shadow-md border border-white backdrop-blur-md flex-shrink-0"
           >
             <div className="w-full h-[200px] bg-gray-300">
               {result.albumArt ? (
@@ -115,40 +114,14 @@ const ResultPage: React.FC = () => {
               )}
             </div>
             <div className="p-2 flex flex-col justify-between h-[120px]">
-              <div
-                ref={textRef}
-                className={`relative ${
-                  checkOverflow(textRef.current) ? "flex overflow-x-hidden" : ""
-                }`}
-              >
-                <div
-                  className={`${
-                    checkOverflow(textRef.current)
-                      ? "animate-marquee whitespace-nowrap"
-                      : ""
-                  }`}
-                >
-                  <span className="text-black text-lg font-bold mx-4">
-                    {result.musicName}
-                  </span>
+              <div className="relative">
+                <div className="text-black text-lg font-bold truncate">
+                  {result.musicName}
                 </div>
               </div>
-              <div
-                ref={textRef}
-                className={`relative ${
-                  checkOverflow(textRef.current) ? "flex overflow-x-hidden" : ""
-                }`}
-              >
-                <div
-                  className={`${
-                    checkOverflow(textRef.current)
-                      ? "animate-marquee whitespace-nowrap"
-                      : ""
-                  }`}
-                >
-                  <span className="text-gray-700 text-sm mx-4">
-                    {result.singer}
-                  </span>
+              <div className="relative">
+                <div className="text-gray-700 text-sm truncate">
+                  {result.singer}
                 </div>
               </div>
             </div>
