@@ -78,13 +78,13 @@ const ResultPage: React.FC = () => {
       <div className="relative z-10 text-white text-[20px] font-bold mt-10">
         추천 음악 목록
       </div>
-      <div className="relative z-10 mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4">
+      <div className="relative z-10 mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4">
         {searchResult.map((result, index) => (
           <div
             key={index}
-            className="relative w-[172px] h-[228px] rounded-tl-[38px] overflow-hidden bg-white bg-opacity-60 shadow-md border border-white backdrop-blur-md"
+            className="relative w-[200px] h-[300px] rounded-tl-[38px] overflow-hidden bg-white bg-opacity-60 shadow-md border border-white backdrop-blur-md"
           >
-            <div className="w-full h-[172px] bg-gray-300">
+            <div className="w-full h-[200px] bg-gray-300">
               {result.albumArt ? (
                 <img
                   className="w-full h-full object-cover"
@@ -97,11 +97,13 @@ const ResultPage: React.FC = () => {
                 </div>
               )}
             </div>
-            <div className="p-2">
-              <div className="text-black text-lg font-bold">
+            <div className="p-2 flex flex-col justify-between h-[100px]">
+              <div className="text-black text-lg font-bold truncate">
                 {result.musicName}
               </div>
-              <div className="text-gray-700 text-sm">{result.singer}</div>
+              <div className="text-gray-700 text-sm truncate">
+                {result.singer}
+              </div>
             </div>
           </div>
         ))}
