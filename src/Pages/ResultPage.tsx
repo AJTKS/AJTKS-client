@@ -96,12 +96,12 @@ const ResultPage: React.FC = () => {
       style={{ backgroundImage: 'url("Desktop - 9.svg")' }}
     >
       <div className="relative w-full max-w-4xl px-4 text-center mt-10">
-        <div className="relative z-10 text-white text-3xl md:text-4xl font-bold">
+        <div className="relative z-10 text-white text-xl md:text-2xl font-bold">
           추천 음악 목록
         </div>
         <button
           className="absolute right-0 top-0 transform -translate-y-1/2 bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full transition duration-200 ease-in-out hover:bg-blue-700 active:bg-blue-900 active:scale-95"
-          style={{ right: "2rem" }}
+          style={{ right: "2rem", top: "50%" }}
           onClick={() => navigate("/")}
         >
           다시 인식하기
@@ -113,6 +113,7 @@ const ResultPage: React.FC = () => {
             ? "flex overflow-x-auto space-x-4 px-4"
             : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4"
         }`}
+        style={{ WebkitOverflowScrolling: "touch" }}
       >
         {searchResult.map((result, index) => (
           <div
