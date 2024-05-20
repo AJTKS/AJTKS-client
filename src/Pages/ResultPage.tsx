@@ -17,12 +17,25 @@ const ResultPage: React.FC = () => {
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
+  const nameRefs = useRef<HTMLDivElement[]>([]);
+  const singerRefs = useRef<HTMLDivElement[]>([]);
+  const [overflowStates, setOverflowStates] = useState<{
+    name: boolean[];
+    singer: boolean[];
+  }>({ name: [], singer: [] });
+
   const checkOverflow = (element: HTMLElement | null) => {
     if (element) {
       return element.scrollWidth > element.clientWidth;
     }
     return false;
   };
+
+  useLayoutEffect(() => {
+    const nameOverflow = nameRefs.current.map(checkOverflow);
+    const singerOverflow = singerRefs.current.map(checkOverflow);
+    setOverflowStates({ name: nameOverflow, singer: singerOverflow });
+  }, [searchResult]);
 
   useEffect(() => {
     if (!taskId) {
@@ -47,7 +60,7 @@ const ResultPage: React.FC = () => {
           musicName: decodeUnicode(result.musicName),
           singer: decodeUnicode(result.singer),
           albumArt: result.albumArt
-            ? `https://ajtksbackend.p-e.kr/${result.albumArt}`
+            ? `https://ajtksbackend.p-e.kr/album_arts/${result.albumArt}`
             : null,
         }));
 
@@ -101,76 +114,64 @@ const ResultPage: React.FC = () => {
             : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4"
         }`}
       >
-        {searchResult.map((result, index) => {
-          const nameRef = useRef<HTMLDivElement>(null);
-          const singerRef = useRef<HTMLDivElement>(null);
-          const [nameOverflow, setNameOverflow] = useState(false);
-          const [singerOverflow, setSingerOverflow] = useState(false);
-
-          useLayoutEffect(() => {
-            setNameOverflow(checkOverflow(nameRef.current));
-            setSingerOverflow(checkOverflow(singerRef.current));
-          }, []);
-
-          return (
-            <div
-              key={index}
-              className="relative w-[220px] h-[320px] rounded-tl-[38px] overflow-hidden bg-white bg-opacity-60 shadow-md border border-white backdrop-blur-md flex-shrink-0"
-            >
-              <div className="w-full h-[200px] bg-gray-300">
-                {result.albumArt ? (
-                  <img
-                    className="w-full h-full object-cover"
-                    src={result.albumArt}
-                    alt={`Album art for ${result.musicName}`}
-                  />
-                ) : (
-                  <div className="flex items-center justify-center h-full text-gray-500">
-                    No Image
-                  </div>
-                )}
-              </div>
-              <div className="p-2 flex flex-col justify-between h-[120px]">
-                <div
-                  ref={nameRef}
-                  className={`relative ${
-                    nameOverflow ? "flex overflow-x-hidden" : ""
-                  }`}
-                >
-                  <div
-                    className={`${
-                      nameOverflow
-                        ? "animate-marquee whitespace-nowrap"
-                        : "truncate"
-                    }`}
-                  >
-                    <span className="text-black text-lg font-bold mx-4">
-                      {result.musicName}
-                    </span>
-                  </div>
+        {searchResult.map((result, index) => (
+          <div
+            key={index}
+            className="relative w-[220px] h-[320px] rounded-tl-[38px] overflow-hidden bg-white bg-opacity-60 shadow-md border border-white backdrop-blur-md flex-shrink-0"
+          >
+            <div className="w-full h-[200px] bg-gray-300">
+              {result.albumArt ? (
+                <img
+                  className="w-full h-full object-cover"
+                  src={result.albumArt}
+                  alt={`Album art for ${result.musicName}`}
+                />
+              ) : (
+                <div className="flex items-center justify-center h-full text-gray-500">
+                  No Image
                 </div>
+              )}
+            </div>
+            <div className="p-2 flex flex-col justify-between h-[120px]">
+              <div
+                ref={(el) => (nameRefs.current[index] = el as HTMLDivElement)}
+                className={`relative ${
+                  overflowStates.name[index] ? "flex overflow-x-hidden" : ""
+                }`}
+              >
                 <div
-                  ref={singerRef}
-                  className={`relative ${
-                    singerOverflow ? "flex overflow-x-hidden" : ""
+                  className={`${
+                    overflowStates.name[index]
+                      ? "animate-marquee whitespace-nowrap"
+                      : "truncate"
                   }`}
                 >
-                  <div
-                    className={`${
-                      singerOverflow
-                        ? "animate-marquee whitespace-nowrap"
-                        : "truncate"
-                    }`}
-                  >
-                    <span className="text-gray-700 text-sm mx-4">
-                      {result.singer}
-                    </span>
-                  </div>
+                  <span className="text-black text-lg font-bold mx-4">
+                    {result.musicName}
+                  </span>
+                </div>
+              </div>
+              <div
+                ref={(el) => (singerRefs.current[index] = el as HTMLDivElement)}
+                className={`relative ${
+                  overflowStates.singer[index] ? "flex overflow-x-hidden" : ""
+                }`}
+              >
+                <div
+                  className={`${
+                    overflowStates.singer[index]
+                      ? "animate-marquee whitespace-nowrap"
+                      : "truncate"
+                  }`}
+                >
+                  <span className="text-gray-700 text-sm mx-4">
+                    {result.singer}
+                  </span>
                 </div>
               </div>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
       <div className="relative z-10 mt-10 w-full max-w-4xl px-4">
         <div className="flex justify-between w-full mt-4">
