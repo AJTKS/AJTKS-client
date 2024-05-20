@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./marquee.css";
 
 const decodeUnicode = (str: string) => {
   return str.replace(/\\u[\dA-F]{4}/gi, (match) => {
@@ -70,12 +69,18 @@ const ResultPage: React.FC = () => {
   }
 
   return (
-    <div className="overflow-hidden w-full min-h-screen fixed inset-0 flex flex-col items-center justify-center">
-      <img
-        className="absolute w-full min-h-screen object-cover"
-        src="Desktop - 9.svg"
-        alt="Background"
-      />
+    <div
+      className="overflow-hidden w-full min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
+      style={{ backgroundImage: 'url("Desktop - 9.svg")' }}
+    >
+      <div className="absolute top-0 right-0 m-4">
+        <button
+          className="bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full transition duration-200 ease-in-out hover:bg-blue-700 active:bg-blue-900 active:scale-95"
+          onClick={() => navigate("/")}
+        >
+          다시 인식하기
+        </button>
+      </div>
       <div className="relative z-10 text-white text-[20px] font-bold mt-10">
         추천 음악 목록
       </div>
@@ -99,14 +104,18 @@ const ResultPage: React.FC = () => {
               )}
             </div>
             <div className="p-2 flex flex-col justify-between h-[120px]">
-              <div className="text-black text-lg font-bold overflow-hidden whitespace-nowrap relative">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="marquee">{result.musicName}</span>
+              <div className="relative flex overflow-x-hidden">
+                <div className="animate-marquee whitespace-nowrap">
+                  <span className="text-black text-lg font-bold mx-4">
+                    {result.musicName}
+                  </span>
                 </div>
               </div>
-              <div className="text-gray-700 text-sm overflow-hidden whitespace-nowrap relative">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="marquee">{result.singer}</span>
+              <div className="relative flex overflow-x-hidden">
+                <div className="animate-marquee whitespace-nowrap">
+                  <span className="text-gray-700 text-sm mx-4">
+                    {result.singer}
+                  </span>
                 </div>
               </div>
             </div>
@@ -118,12 +127,6 @@ const ResultPage: React.FC = () => {
           <div className="bg-black bg-opacity-80 text-blue-400 text-sm font-bold px-4 py-2 rounded-full">
             음악 설명 by MU-LLaMA
           </div>
-          <button
-            className="bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full transition duration-200 ease-in-out hover:bg-blue-700 active:bg-blue-900 active:scale-95"
-            onClick={() => navigate("/")}
-          >
-            다시 인식하기
-          </button>
         </div>
       </div>
     </div>
