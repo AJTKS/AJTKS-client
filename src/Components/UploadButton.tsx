@@ -13,18 +13,18 @@ const UploadButton: React.FC<UploadButtonProps> = ({ onDrop }) => {
   });
 
   return (
-    <div className="relative w-52 h-16 bg-green-500 flex justify-center items-center">
+    <div className="relative w-52 h-16">
       <div
         {...getRootProps()}
-        className="flex justify-center items-center w-full h-full text-white text-lg font-normal cursor-pointer"
+        className={`flex justify-center items-center w-full h-full text-white text-lg font-normal cursor-pointer rounded-lg transition duration-200 ease-in-out ${
+          isDragActive ? "bg-green-400" : "bg-green-500"
+        } hover:bg-green-600 active:bg-green-700 active:scale-95`}
         style={{ fontFamily: "Inter" }}
       >
         <input {...getInputProps()} />
-        {isDragActive ? (
-          <p>Drop the files here...</p>
-        ) : (
-          <p onClick={open}>Select the Audio</p>
-        )}
+        <p onClick={open}>
+          {isDragActive ? "Drop the files here..." : "Select the Audio"}
+        </p>
       </div>
     </div>
   );
