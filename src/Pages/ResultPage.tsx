@@ -34,6 +34,7 @@ const ResultPage: React.FC = () => {
         }
 
         const decodedResult = (data.searchResult || []).map((result: any) => ({
+
           ...result,
           musicName: decodeUnicode(result.musicName),
           singer: decodeUnicode(result.singer),
