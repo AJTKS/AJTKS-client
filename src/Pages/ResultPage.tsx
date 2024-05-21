@@ -118,11 +118,11 @@ const ResultPage: React.FC = () => {
         >
           다시 인식하기
         </button>
-        <div className="relative z-10 text-gray-800 md:text-white text-xl md:text-2xl font-bold mt-4">
+        <div className="relative z-10 text-gray-800 text-xl md:text-2xl font-bold mt-4">
           추천 음악 목록
         </div>
         {fileName && (
-          <div className="text-gray-800 md:text-white text-sm md:text-base mt-2">
+          <div className="text-gray-800 text-sm md:text-base mt-2">
             입력 파일명: {fileName}
           </div>
         )}
