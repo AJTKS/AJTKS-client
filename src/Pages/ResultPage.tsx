@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useMediaQuery } from "react-responsive";
 import Marquee from "react-fast-marquee";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const decodeUnicode = (str: string) => {
   return str.replace(/\\u[\dA-F]{4}/gi, (match) => {
@@ -204,7 +204,7 @@ const ResultPage: React.FC = () => {
       </div>
       <div className="relative z-10 mt-10 w-full max-w-4xl px-4">
         <div
-          className="bg-black bg-opacity-80 text-white text-sm font-bold px-4 py-2 rounded-full"
+          className="inline-block bg-blue-800 text-white text-sm font-bold px-4 py-2 rounded-full"
           style={{ fontFamily: "Inter" }}
         >
           Music Description by MU-LLaMA
@@ -215,14 +215,26 @@ const ResultPage: React.FC = () => {
         >
           <p>{overlayDescription || recommendation}</p>
         </div>
-        {overlayDescription && (
-          <button
-            className="absolute top-0 right-0 m-4 text-white text-sm bg-red-600 rounded-full px-2 py-1"
-            onClick={handleOverlayClose}
-          >
-            닫기
-          </button>
-        )}
+        <AnimatePresence>
+          {overlayDescription && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              className="fixed inset-0 z-20 flex items-center justify-center"
+            >
+              <div className="bg-white text-black text-base font-normal px-6 py-4 rounded-lg shadow-lg relative max-w-2xl mx-auto">
+                <p style={{ whiteSpace: "pre-line" }}>{overlayDescription}</p>
+                <button
+                  className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+                  onClick={handleOverlayClose}
+                >
+                  X
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
