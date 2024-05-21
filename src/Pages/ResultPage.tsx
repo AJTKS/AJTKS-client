@@ -16,6 +16,7 @@ const ResultPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+  const isDesktop = useMediaQuery({ query: "(min-width: 769px)" });
 
   const nameRefs = useRef<HTMLDivElement[]>([]);
   const singerRefs = useRef<HTMLDivElement[]>([]);
@@ -107,73 +108,137 @@ const ResultPage: React.FC = () => {
           추천 음악 목록
         </div>
       </div>
-      <div
-        className={`relative z-10 mt-4 w-full ${
-          isMobile
-            ? "flex overflow-x-auto space-x-4 px-4"
-            : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4"
-        }`}
-        style={{ WebkitOverflowScrolling: "touch" }}
-      >
-        {searchResult.map((result, index) => (
-          <div
-            key={index}
-            className="relative w-[220px] h-[320px] rounded-tl-[38px] overflow-hidden bg-white bg-opacity-60 shadow-md border border-white backdrop-blur-md flex-shrink-0"
-          >
-            <div className="w-full h-[200px] bg-gray-300">
-              {result.albumArt ? (
-                <img
-                  className="w-full h-full object-cover"
-                  src={result.albumArt}
-                  alt={`Album art for ${result.musicName}`}
-                />
-              ) : (
-                <div className="flex items-center justify-center h-full text-gray-500">
-                  No Image
-                </div>
-              )}
-            </div>
-            <div className="p-2 flex flex-col justify-between h-[120px]">
-              <div
-                ref={(el) => (nameRefs.current[index] = el as HTMLDivElement)}
-                className={`relative ${
-                  overflowStates.name[index] ? "flex overflow-x-hidden" : ""
-                }`}
-              >
-                <div
-                  className={`${
-                    overflowStates.name[index]
-                      ? "animate-marquee whitespace-nowrap"
-                      : "truncate"
-                  }`}
-                >
-                  <span className="text-black text-lg font-bold mx-4">
-                    {result.musicName}
-                  </span>
-                </div>
+      {isDesktop && (
+        <div className="relative z-10 mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4">
+          {searchResult.map((result, index) => (
+            <div
+              key={index}
+              className="relative w-[220px] h-[320px] rounded-tl-[38px] overflow-hidden bg-white bg-opacity-60 shadow-md border border-white backdrop-blur-md flex-shrink-0"
+            >
+              <div className="w-full h-[200px] bg-gray-300">
+                {result.albumArt ? (
+                  <img
+                    className="w-full h-full object-cover"
+                    src={result.albumArt}
+                    alt={`Album art for ${result.musicName}`}
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-full text-gray-500">
+                    No Image
+                  </div>
+                )}
               </div>
-              <div
-                ref={(el) => (singerRefs.current[index] = el as HTMLDivElement)}
-                className={`relative ${
-                  overflowStates.singer[index] ? "flex overflow-x-hidden" : ""
-                }`}
-              >
+              <div className="p-2 flex flex-col justify-between h-[120px]">
                 <div
-                  className={`${
-                    overflowStates.singer[index]
-                      ? "animate-marquee whitespace-nowrap"
-                      : "truncate"
+                  ref={(el) => (nameRefs.current[index] = el as HTMLDivElement)}
+                  className={`relative ${
+                    overflowStates.name[index] ? "flex overflow-x-hidden" : ""
                   }`}
                 >
-                  <span className="text-gray-700 text-sm mx-4">
-                    {result.singer}
-                  </span>
+                  <div
+                    className={`${
+                      overflowStates.name[index]
+                        ? "animate-marquee whitespace-nowrap"
+                        : "truncate"
+                    }`}
+                  >
+                    <span className="text-black text-lg font-bold mx-4">
+                      {result.musicName}
+                    </span>
+                  </div>
+                </div>
+                <div
+                  ref={(el) =>
+                    (singerRefs.current[index] = el as HTMLDivElement)
+                  }
+                  className={`relative ${
+                    overflowStates.singer[index] ? "flex overflow-x-hidden" : ""
+                  }`}
+                >
+                  <div
+                    className={`${
+                      overflowStates.singer[index]
+                        ? "animate-marquee whitespace-nowrap"
+                        : "truncate"
+                    }`}
+                  >
+                    <span className="text-gray-700 text-sm mx-4">
+                      {result.singer}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
+      {isMobile && (
+        <div
+          className="relative z-10 mt-4 flex overflow-x-auto space-x-4 px-4"
+          style={{ WebkitOverflowScrolling: "touch" }}
+        >
+          {searchResult.map((result, index) => (
+            <div
+              key={index}
+              className="relative w-[220px] h-[320px] rounded-tl-[38px] overflow-hidden bg-white bg-opacity-60 shadow-md border border-white backdrop-blur-md flex-shrink-0"
+            >
+              <div className="w-full h-[200px] bg-gray-300">
+                {result.albumArt ? (
+                  <img
+                    className="w-full h-full object-cover"
+                    src={result.albumArt}
+                    alt={`Album art for ${result.musicName}`}
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-full text-gray-500">
+                    No Image
+                  </div>
+                )}
+              </div>
+              <div className="p-2 flex flex-col justify-between h-[120px]">
+                <div
+                  ref={(el) => (nameRefs.current[index] = el as HTMLDivElement)}
+                  className={`relative ${
+                    overflowStates.name[index] ? "flex overflow-x-hidden" : ""
+                  }`}
+                >
+                  <div
+                    className={`${
+                      overflowStates.name[index]
+                        ? "animate-marquee whitespace-nowrap"
+                        : "truncate"
+                    }`}
+                  >
+                    <span className="text-black text-lg font-bold mx-4">
+                      {result.musicName}
+                    </span>
+                  </div>
+                </div>
+                <div
+                  ref={(el) =>
+                    (singerRefs.current[index] = el as HTMLDivElement)
+                  }
+                  className={`relative ${
+                    overflowStates.singer[index] ? "flex overflow-x-hidden" : ""
+                  }`}
+                >
+                  <div
+                    className={`${
+                      overflowStates.singer[index]
+                        ? "animate-marquee whitespace-nowrap"
+                        : "truncate"
+                    }`}
+                  >
+                    <span className="text-gray-700 text-sm mx-4">
+                      {result.singer}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
       <div className="relative z-10 mt-10 w-full max-w-4xl px-4">
         <div className="flex justify-between w-full mt-4">
           <div className="bg-black bg-opacity-80 text-blue-400 text-sm font-bold px-4 py-2 rounded-full">
