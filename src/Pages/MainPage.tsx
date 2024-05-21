@@ -83,6 +83,18 @@ const MainPage: React.FC = () => {
           Input the Audio, and then wait for our recommendation!
         </div>
         <UploadButton onDrop={onDrop} />
+        <a
+          href="https://github.com/AJTKS"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4"
+        >
+          <img
+            src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+            alt="GitHub"
+            className="w-10 h-10"
+          />
+        </a>
       </div>
 
       {showConfirmation && (

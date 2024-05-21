@@ -68,7 +68,7 @@ const ResultPage: React.FC = () => {
         setSearchResult(decodedResult);
       } catch (error) {
         console.error("Error fetching task status:", error);
-        setError("결果를 가져오는 중 오류가 발생했습니다.");
+        setError("결과를 가져오는 중 오류가 발생했습니다.");
       }
     };
 
@@ -109,7 +109,7 @@ const ResultPage: React.FC = () => {
         </div>
         {fileName && (
           <div className="text-white text-sm md:text-base mt-2">
-            파일명: {fileName}
+            입력 파일명: {fileName}
           </div>
         )}
       </div>
