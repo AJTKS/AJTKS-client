@@ -52,6 +52,7 @@ const ResultPage: React.FC = () => {
           `https://ajtksbackend.p-e.kr/task/${taskId}`
         );
         const data = response.data;
+        console.log(data);
 
         if (!data || !data.searchResult) {
           setError("결과 데이터가 없습니다.");
