@@ -67,7 +67,7 @@ const ResultPage: React.FC = () => {
         setSearchResult(decodedResult);
       } catch (error) {
         console.error("Error fetching task status:", error);
-        setError("결과를 가져오는 중 오류가 발생했습니다.");
+        setError("결果를 가져오는 중 오류가 발생했습니다.");
       }
     };
 
@@ -96,16 +96,16 @@ const ResultPage: React.FC = () => {
       style={{ backgroundImage: 'url("Desktop - 9.svg")' }}
     >
       <div className="relative w-full max-w-4xl px-4 text-center mt-10">
-        <div className="relative z-10 text-white text-xl md:text-2xl font-bold">
-          추천 음악 목록
-        </div>
         <button
-          className="absolute right-0 top-0 transform -translate-y-1/2 bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full transition duration-200 ease-in-out hover:bg-blue-700 active:bg-blue-900 active:scale-95"
-          style={{ right: "2rem", top: "50%" }}
+          className="absolute right-0 transform -translate-y-full bg-blue-800 text-white text-base font-bold px-4 py-2 rounded-full transition duration-200 ease-in-out hover:bg-blue-700 active:bg-blue-900 active:scale-95"
+          style={{ right: "2rem", top: "0" }}
           onClick={() => navigate("/")}
         >
           다시 인식하기
         </button>
+        <div className="relative z-10 text-white text-xl md:text-2xl font-bold mt-4">
+          추천 음악 목록
+        </div>
       </div>
       <div
         className={`relative z-10 mt-4 ${
