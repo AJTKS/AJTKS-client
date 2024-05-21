@@ -15,6 +15,7 @@ const ResultPage: React.FC = () => {
   const location = useLocation();
   const { taskId, fileName } = location.state || {};
   const [searchResult, setSearchResult] = useState<any[]>([]);
+  const [recommendation, setRecommendation] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
@@ -64,10 +65,10 @@ const ResultPage: React.FC = () => {
           albumArt: result.albumArt
             ? `https://ajtksbackend.p-e.kr/${result.albumArt}`
             : null,
-          recommendation: decodeUnicode(result.recommendation),
         }));
 
         setSearchResult(decodedResult);
+        setRecommendation(data.recommendation);
       } catch (error) {
         console.error("Error fetching task status:", error);
         setError("결과를 가져오는 중 오류가 발생했습니다.");
@@ -192,14 +193,14 @@ const ResultPage: React.FC = () => {
         >
           음악 설명 by MU-LLaMA
         </div>
-        <div
-          className="mt-4 bg-gray-800 bg-opacity-80 text-white text-base font-normal px-6 py-4 rounded-lg"
-          style={{ fontFamily: "Inter" }}
-        >
-          {searchResult.map((result, index) => (
-            <p key={index}>{result.recommendation}</p>
-          ))}
-        </div>
+        {recommendation && (
+          <div
+            className="mt-4 bg-gray-800 bg-opacity-80 text-white text-base font-normal px-6 py-4 rounded-lg"
+            style={{ fontFamily: "Inter" }}
+          >
+            <p>{recommendation}</p>
+          </div>
+        )}
       </div>
     </div>
   );
