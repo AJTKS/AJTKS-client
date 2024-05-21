@@ -70,15 +70,21 @@ const MainPage: React.FC = () => {
       className="relative w-full min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
       style={{ backgroundImage: 'url("Desktop - 9.svg")' }}
     >
-      <div
+      <motion.div
         className="text-white text-2xl md:text-5xl font-normal text-center px-4"
         style={{ fontFamily: "Inter" }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.05 }}
       >
         알아서 잘 딱 깔끔하고 센스있게
-      </div>
-      <div
+      </motion.div>
+      <motion.div
         className="text-gray-300 text-xl md:text-2xl font-normal text-center mt-6 flex flex-col items-center px-4"
         style={{ fontFamily: "Inter" }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
       >
         <div className="mb-4 text-base">
           Input the Audio, and then wait for our recommendation!
@@ -92,7 +98,7 @@ const MainPage: React.FC = () => {
         >
           <img src="github_logo.png" alt="GitHub" className="w-20 h-auto" />
         </a>
-      </div>
+      </motion.div>
 
       <AnimatePresence>
         {showConfirmation && (
