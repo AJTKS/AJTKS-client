@@ -108,7 +108,7 @@ const ResultPage: React.FC = () => {
         </div>
       </div>
       <div
-        className={`relative z-10 mt-4 ${
+        className={`relative z-10 mt-4 w-full ${
           isMobile
             ? "flex overflow-x-auto space-x-4 px-4"
             : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4"

@@ -75,7 +75,7 @@ const MainPage: React.FC = () => {
         className="text-white text-3xl md:text-5xl font-normal text-center px-4"
         style={{ fontFamily: "Inter" }}
       >
-        알아서 잘 딱 깔끔하게 센스있게
+        알아서 잘 딱 깔끔하고 센스있게
       </div>
       <div
         className="text-gray-300 text-xl md:text-2xl font-normal text-center mt-6 flex flex-col items-center px-4"
