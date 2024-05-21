@@ -92,7 +92,7 @@ const ResultPage: React.FC = () => {
 
   return (
     <div
-      className="overflow-hidden w-full min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
+      className="overflow-hidden w-auto min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
       style={{ backgroundImage: 'url("Desktop - 9.svg")' }}
     >
       <div className="relative w-full max-w-4xl px-4 text-center mt-10">
