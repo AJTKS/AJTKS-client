@@ -70,7 +70,7 @@ const MainPage: React.FC = () => {
       style={{ backgroundImage: 'url("Desktop - 9.svg")' }}
     >
       <div
-        className="text-white text-3xl md:text-5xl font-normal text-center px-4"
+        className="text-white text-2xl md:text-5xl font-normal text-center px-4"
         style={{ fontFamily: "Inter" }}
       >
         알아서 잘 딱 깔끔하고 센스있게
@@ -79,7 +79,7 @@ const MainPage: React.FC = () => {
         className="text-gray-300 text-xl md:text-2xl font-normal text-center mt-6 flex flex-col items-center px-4"
         style={{ fontFamily: "Inter" }}
       >
-        <div className="mb-4">
+        <div className="mb-4 text-base">
           Input the Audio, and then wait for our recommendation!
         </div>
         <UploadButton onDrop={onDrop} />
@@ -89,11 +89,7 @@ const MainPage: React.FC = () => {
           rel="noopener noreferrer"
           className="mt-4"
         >
-          <img
-            src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-            alt="GitHub"
-            className="w-10 h-10"
-          />
+          <img src="github_logo.png" alt="GitHub" className="w-20 h-auto" />
         </a>
       </div>
 
@@ -102,13 +98,13 @@ const MainPage: React.FC = () => {
           <div className="bg-white p-4 rounded shadow-lg text-center">
             <p className="mb-4">"{fileName}"을(를) 업로드 하시겠습니까?</p>
             <button
-              className="bg-green-500 text-white py-2 px-4 rounded mr-2"
+              className="bg-green-500 text-white py-2 px-4 rounded mr-2 transform transition-all duration-200 hover:bg-green-600 hover:scale-105 active:scale-95"
               onClick={handleUpload}
             >
               확인
             </button>
             <button
-              className="bg-red-500 text-white py-2 px-4 rounded"
+              className="bg-red-500 text-white py-2 px-4 rounded transform transition-all duration-200 hover:bg-red-600 hover:scale-105 active:scale-95"
               onClick={() => setShowConfirmation(false)}
             >
               취소
