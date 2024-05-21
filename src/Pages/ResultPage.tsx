@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useMediaQuery } from "react-responsive";
 import Marquee from "react-fast-marquee";
+import { motion } from "framer-motion";
 
 const decodeUnicode = (str: string) => {
   return str.replace(/\\u[\dA-F]{4}/gi, (match) => {
@@ -63,6 +64,7 @@ const ResultPage: React.FC = () => {
           albumArt: result.albumArt
             ? `https://ajtksbackend.p-e.kr/${result.albumArt}`
             : null,
+          recommendation: decodeUnicode(result.recommendation),
         }));
 
         setSearchResult(decodedResult);
@@ -122,9 +124,12 @@ const ResultPage: React.FC = () => {
         style={{ WebkitOverflowScrolling: "touch" }}
       >
         {searchResult.map((result, index) => (
-          <div
+          <motion.div
             key={index}
             className="relative w-[220px] h-[320px] rounded-tl-[38px] overflow-hidden bg-white bg-opacity-60 shadow-md border border-white backdrop-blur-md flex-shrink-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
           >
             <div className="w-full h-[200px] bg-gray-300">
               {result.albumArt ? (
@@ -177,14 +182,23 @@ const ResultPage: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
       <div className="relative z-10 mt-10 w-full max-w-4xl px-4">
-        <div className="flex justify-between w-full mt-4">
-          <div className="bg-black bg-opacity-80 text-blue-400 text-sm font-bold px-4 py-2 rounded-full">
-            음악 설명 by MU-LLaMA
-          </div>
+        <div
+          className="bg-black bg-opacity-80 text-white text-sm font-bold px-4 py-2 rounded-full"
+          style={{ fontFamily: "Inter" }}
+        >
+          음악 설명 by MU-LLaMA
+        </div>
+        <div
+          className="mt-4 bg-gray-800 bg-opacity-80 text-white text-base font-normal px-6 py-4 rounded-lg"
+          style={{ fontFamily: "Inter" }}
+        >
+          {searchResult.map((result, index) => (
+            <p key={index}>{result.recommendation}</p>
+          ))}
         </div>
       </div>
     </div>
