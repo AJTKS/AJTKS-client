@@ -12,7 +12,7 @@ const decodeUnicode = (str: string) => {
 
 const ResultPage: React.FC = () => {
   const location = useLocation();
-  const { taskId } = location.state || {};
+  const { taskId, fileName } = location.state || {};
   const [searchResult, setSearchResult] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -107,12 +107,17 @@ const ResultPage: React.FC = () => {
         <div className="relative z-10 text-white text-xl md:text-2xl font-bold mt-4">
           추천 음악 목록
         </div>
+        {fileName && (
+          <div className="text-white text-sm md:text-base mt-2">
+            입력 파일명: {fileName}
+          </div>
+        )}
       </div>
       <div
         className={`relative z-10 mt-4 w-full ${
           isMobile
             ? "flex overflow-x-auto space-x-4 px-4"
-            : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4"
+            : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 px-4"
         }`}
         style={{ WebkitOverflowScrolling: "touch" }}
       >
@@ -141,19 +146,17 @@ const ResultPage: React.FC = () => {
                   overflowStates.name[index] ? "flex overflow-x-hidden" : ""
                 }`}
               >
-                <div
-                  className={`${
-                    overflowStates.name[index]
-                      ? "animate-marquee whitespace-nowrap"
-                      : "truncate"
-                  }`}
-                >
+                {result.musicName.length >= 10 ? (
                   <Marquee>
                     <span className="text-black text-lg font-bold mx-4">
                       {result.musicName}
                     </span>
                   </Marquee>
-                </div>
+                ) : (
+                  <span className="text-black text-lg font-bold mx-4">
+                    {result.musicName}
+                  </span>
+                )}
               </div>
               <div
                 ref={(el) => (singerRefs.current[index] = el as HTMLDivElement)}
