@@ -210,31 +210,29 @@ const ResultPage: React.FC = () => {
           Music Description by MU-LLaMA
         </div>
         <div
-          className="mt-4 bg-gray-800 bg-opacity-80 text-white text-base font-normal px-6 py-4 rounded-lg"
+          className="mt-4 bg-gray-800 bg-opacity-80 text-white text-base font-normal px-6 py-4 rounded-lg relative"
           style={{ fontFamily: "Inter", whiteSpace: "pre-line" }}
         >
-          <p>{overlayDescription || recommendation}</p>
-        </div>
-        <AnimatePresence>
-          {overlayDescription && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              className="fixed inset-0 z-20 flex items-center justify-center"
-            >
-              <div className="bg-white text-black text-base font-normal px-6 py-4 rounded-lg shadow-lg relative max-w-2xl mx-auto">
+          <p>{recommendation}</p>
+          <AnimatePresence>
+            {overlayDescription && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-white text-black text-base font-normal px-6 py-4 rounded-lg shadow-lg flex items-start justify-between"
+              >
                 <p style={{ whiteSpace: "pre-line" }}>{overlayDescription}</p>
                 <button
-                  className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+                  className="text-gray-500 hover:text-gray-700"
                   onClick={handleOverlayClose}
                 >
                   X
                 </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );
