@@ -2,7 +2,6 @@ import React, { useState, useCallback } from "react";
 import axios from "axios";
 import UploadButton from "../Components/UploadButton";
 import { useNavigate } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
 
 const MainPage: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -11,7 +10,6 @@ const MainPage: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const selectedFile = acceptedFiles[0];
