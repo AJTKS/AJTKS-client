@@ -210,7 +210,7 @@ const ResultPage: React.FC = () => {
           Music Description by MU-LLaMA
         </div>
         <div
-          className="mt-4 bg-gray-800 bg-opacity-80 text-white text-base font-normal px-6 py-4 rounded-lg relative"
+          className="mt-4 bg-gray-800 bg-opacity-80 text-white text-base font-normal px-6 py-4 rounded-lg relative overflow-y-auto max-h-96"
           style={{ fontFamily: "Inter", whiteSpace: "pre-line" }}
         >
           <p>{recommendation}</p>
@@ -220,7 +220,7 @@ const ResultPage: React.FC = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-white text-black text-base font-normal px-6 py-4 rounded-lg shadow-lg flex items-start justify-between"
+                className="absolute inset-0 bg-white text-black text-base font-normal px-6 py-4 rounded-lg shadow-lg flex items-start justify-between overflow-y-auto max-h-96"
               >
                 <p style={{ whiteSpace: "pre-line" }}>{overlayDescription}</p>
                 <button
