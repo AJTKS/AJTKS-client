@@ -45,7 +45,7 @@ const MainPage: React.FC = () => {
 
       setTimeout(() => {
         navigate("/result", { state: { taskId: task_id } });
-      }, 3000);
+      }, 4000);
     } catch (error) {
       console.error("Error uploading file:", error);
       setIsAnalyzing(false);
