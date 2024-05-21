@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useMediaQuery } from "react-responsive";
+import Marquee from "react-fast-marquee";
 
 const decodeUnicode = (str: string) => {
   return str.replace(/\\u[\dA-F]{4}/gi, (match) => {
@@ -147,9 +148,11 @@ const ResultPage: React.FC = () => {
                       : "truncate"
                   }`}
                 >
-                  <span className="text-black text-lg font-bold mx-4">
-                    {result.musicName}
-                  </span>
+                  <Marquee>
+                    <span className="text-black text-lg font-bold mx-4">
+                      {result.musicName}
+                    </span>
+                  </Marquee>
                 </div>
               </div>
               <div
