@@ -42,7 +42,7 @@ const MainPage: React.FC = () => {
       console.log("File uploaded successfully, task ID:", task_id);
 
       setTimeout(() => {
-        navigate("/result", { state: { taskId: task_id } });
+        navigate("/result", { state: { taskId: task_id, fileName } });
       }, 4000);
     } catch (error) {
       console.error("Error uploading file:", error);

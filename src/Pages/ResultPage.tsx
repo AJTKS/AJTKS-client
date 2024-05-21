@@ -109,7 +109,7 @@ const ResultPage: React.FC = () => {
         </div>
         {fileName && (
           <div className="text-white text-sm md:text-base mt-2">
-            입력 파일명: {fileName}
+            파일명: {fileName}
           </div>
         )}
       </div>
