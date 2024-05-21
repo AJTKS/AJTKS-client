@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import axios from "axios";
 import UploadButton from "../Components/UploadButton";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const MainPage: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -93,51 +94,76 @@ const MainPage: React.FC = () => {
         </a>
       </div>
 
-      {showConfirmation && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-4 rounded shadow-lg text-center">
-            <p className="mb-4">"{fileName}"을(를) 업로드 하시겠습니까?</p>
-            <button
-              className="bg-green-500 text-white py-2 px-4 rounded mr-2 transform transition-all duration-200 hover:bg-green-600 hover:scale-105 active:scale-95"
-              onClick={handleUpload}
-            >
-              확인
-            </button>
-            <button
-              className="bg-red-500 text-white py-2 px-4 rounded transform transition-all duration-200 hover:bg-red-600 hover:scale-105 active:scale-95"
-              onClick={() => setShowConfirmation(false)}
-            >
-              취소
-            </button>
-          </div>
-        </div>
-      )}
-
-      {error && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-4 rounded shadow-lg text-center">
-            <p className="mb-4">{error}</p>
-            <button
-              className="bg-red-500 text-white py-2 px-4 rounded"
-              onClick={() => setError(null)}
-            >
-              닫기
-            </button>
-          </div>
-        </div>
-      )}
-
-      {isAnalyzing && (
-        <div className="fixed inset-0 bg-white bg-opacity-75 flex flex-col items-center justify-center">
-          <img className="w-auto h-40 animate-pulse" src="Group 1.svg" alt="" />
-          <div
-            className="text-center text-black text-2xl font-normal mb-4"
-            style={{ fontFamily: "Inter" }}
+      <AnimatePresence>
+        {showConfirmation && (
+          <motion.div
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
-            분석 중입니다...
-          </div>
-        </div>
-      )}
+            <div className="bg-white p-4 rounded shadow-lg text-center">
+              <p className="mb-4">"{fileName}"을(를) 업로드 하시겠습니까?</p>
+              <button
+                className="bg-green-500 text-white py-2 px-4 rounded mr-2 transform transition-all duration-200 hover:bg-green-600 hover:scale-105 active:scale-95"
+                onClick={handleUpload}
+              >
+                확인
+              </button>
+              <button
+                className="bg-red-500 text-white py-2 px-4 rounded transform transition-all duration-200 hover:bg-red-600 hover:scale-105 active:scale-95"
+                onClick={() => setShowConfirmation(false)}
+              >
+                취소
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {error && (
+          <motion.div
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div className="bg-white p-4 rounded shadow-lg text-center">
+              <p className="mb-4">{error}</p>
+              <button
+                className="bg-red-500 text-white py-2 px-4 rounded"
+                onClick={() => setError(null)}
+              >
+                닫기
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isAnalyzing && (
+          <motion.div
+            className="fixed inset-0 bg-white bg-opacity-75 flex flex-col items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <img
+              className="w-auto h-40 animate-pulse"
+              src="Group 1.svg"
+              alt=""
+            />
+            <div
+              className="text-center text-black text-2xl font-normal mb-4"
+              style={{ fontFamily: "Inter" }}
+            >
+              분석 중입니다...
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
