@@ -4,6 +4,7 @@ import axios from "axios";
 import { useMediaQuery } from "react-responsive";
 import Marquee from "react-fast-marquee";
 import { motion, AnimatePresence } from "framer-motion";
+import ReactMarkdown from "react-markdown";
 
 const decodeUnicode = (str: string) => {
   return str.replace(/\\u[\dA-F]{4}/gi, (match) => {
@@ -243,8 +244,8 @@ const ResultPage: React.FC = () => {
               href={overlayLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white text-blue-800 text-sm font-bold px-4 py-2 rounded-full flex items-center space-x-2"
-              style={{ fontFamily: "Inter" }}
+              className="bg-white text-blue-800 text-sm font-bold px-4 py-2 rounded-full transition duration-200 ease-in-out hover:bg-gray-200 active:bg-gray-300 active:scale-95 flex items-center space-x-2"
+              style={{ height: "2rem" }}
             >
               <img
                 src="YouTube_Logo_2017.svg"
@@ -257,9 +258,11 @@ const ResultPage: React.FC = () => {
         </div>
         <div
           className="mt-4 bg-gray-800 bg-opacity-80 text-white text-base font-normal px-6 py-4 rounded-lg relative overflow-y-auto max-h-96"
-          style={{ fontFamily: "Inter", whiteSpace: "pre-line" }}
+          style={{ fontFamily: "Inter" }}
         >
-          <p>{recommendation}</p>
+          <ReactMarkdown className="whitespace-pre-line">
+            {recommendation}
+          </ReactMarkdown>
           <AnimatePresence>
             {overlayDescription && (
               <motion.div
@@ -269,7 +272,9 @@ const ResultPage: React.FC = () => {
                 className="absolute inset-0 bg-white text-black text-base font-normal px-6 py-4 rounded-lg shadow-lg flex flex-col overflow-y-auto max-h-96"
               >
                 <div className="flex justify-between items-start">
-                  <p style={{ whiteSpace: "pre-line" }}>{overlayDescription}</p>
+                  <ReactMarkdown className="whitespace-pre-line">
+                    {overlayDescription}
+                  </ReactMarkdown>
                   <button
                     className="text-gray-500 hover:text-gray-700"
                     onClick={handleOverlayClose}
