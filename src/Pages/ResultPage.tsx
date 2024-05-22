@@ -94,6 +94,7 @@ const ResultPage: React.FC = () => {
     setOverlayDescription(description);
     setOverlayLink(link);
     if (recommendationBoxRef.current) {
+      recommendationBoxRef.current.scrollTop = 0;
       recommendationBoxRef.current.style.overflow = "hidden";
     }
   };
