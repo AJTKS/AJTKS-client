@@ -93,6 +93,7 @@ const ResultPage: React.FC = () => {
     setOverlayDescription(description);
     setOverlayLink(link);
     document.body.style.overflow = "hidden";
+    document.documentElement.scrollTop = 0;
   };
 
   const handleOverlayClose = () => {
