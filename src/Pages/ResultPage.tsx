@@ -231,11 +231,29 @@ const ResultPage: React.FC = () => {
         )}
       </div>
       <div className="relative z-10 mt-10 w-full max-w-4xl px-4">
-        <div
-          className="inline-block bg-blue-800 text-white text-sm font-bold px-4 py-2 rounded-full"
-          style={{ fontFamily: "Inter" }}
-        >
-          Music Description by MU-LLaMA
+        <div className="flex justify-between items-center">
+          <div
+            className="inline-block bg-blue-800 text-white text-sm font-bold px-4 py-2 rounded-full"
+            style={{ fontFamily: "Inter" }}
+          >
+            Music Description by MU-LLaMA
+          </div>
+          {overlayLink && (
+            <a
+              href={overlayLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white text-blue-800 text-sm font-bold px-4 py-2 rounded-full flex items-center space-x-2"
+              style={{ fontFamily: "Inter" }}
+            >
+              <img
+                src="YouTube_Logo_2017.svg"
+                alt="YouTube"
+                className="w-6 h-6"
+              />
+              <span>YouTube</span>
+            </a>
+          )}
         </div>
         <div
           className="mt-4 bg-gray-800 bg-opacity-80 text-white text-base font-normal px-6 py-4 rounded-lg relative overflow-y-auto max-h-96"
@@ -259,20 +277,6 @@ const ResultPage: React.FC = () => {
                     X
                   </button>
                 </div>
-                {overlayLink && (
-                  <a
-                    href={overlayLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="absolute top-2 right-2"
-                  >
-                    <img
-                      src="YouTube_Logo_2017.svg"
-                      alt="YouTube"
-                      className="w-6 h-6"
-                    />
-                  </a>
-                )}
               </motion.div>
             )}
           </AnimatePresence>
