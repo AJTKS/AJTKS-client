@@ -248,7 +248,7 @@ const ResultPage: React.FC = () => {
               style={{ height: "2rem" }}
             >
               <img
-                src="YouTube_Logo_2017.svg"
+                src="YouTube_full-color_icon_(2017).svg"
                 alt="YouTube"
                 className="w-6 h-6"
               />
@@ -257,8 +257,8 @@ const ResultPage: React.FC = () => {
           )}
         </div>
         <div
-          className="mt-4 bg-gray-800 bg-opacity-80 text-white text-base font-normal px-6 py-4 rounded-lg relative overflow-y-auto max-h-96"
-          style={{ fontFamily: "Inter" }}
+          className="mt-4 bg-gray-800 bg-opacity-80 text-white text-base font-normal px-6 py-4 rounded-lg relative overflow-y-auto"
+          style={{ fontFamily: "Inter", maxHeight: "200px" }}
         >
           <ReactMarkdown className="whitespace-pre-line">
             {recommendation}
@@ -269,7 +269,8 @@ const ResultPage: React.FC = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-white text-black text-base font-normal px-6 py-4 rounded-lg shadow-lg flex flex-col overflow-y-auto max-h-96"
+                className="absolute inset-0 bg-white text-black text-base font-normal px-6 py-4 rounded-lg shadow-lg flex flex-col overflow-y-auto"
+                style={{ maxHeight: "200px" }}
               >
                 <div className="flex justify-between items-start">
                   <ReactMarkdown className="whitespace-pre-line">
