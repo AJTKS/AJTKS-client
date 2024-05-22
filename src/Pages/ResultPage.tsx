@@ -21,6 +21,7 @@ const ResultPage: React.FC = () => {
   );
   const [overlayLink, setOverlayLink] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
@@ -47,6 +48,7 @@ const ResultPage: React.FC = () => {
   useEffect(() => {
     if (!taskId) {
       setError("Task ID가 제공되지 않았습니다.");
+      setLoading(false);
       return;
     }
 
@@ -59,6 +61,7 @@ const ResultPage: React.FC = () => {
 
         if (!data || !data.searchResult) {
           setError("결과 데이터가 없습니다.");
+          setLoading(false);
           return;
         }
 
@@ -77,6 +80,8 @@ const ResultPage: React.FC = () => {
       } catch (error) {
         console.error("Error fetching task status:", error);
         setError("결과를 가져오는 중 오류가 발생했습니다.");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -92,6 +97,25 @@ const ResultPage: React.FC = () => {
     setOverlayDescription(null);
     setOverlayLink(null);
   };
+
+  if (loading) {
+    return (
+      <motion.div
+        className="fixed inset-0 bg-white bg-opacity-75 flex flex-col items-center justify-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <img className="w-auto h-40 animate-pulse" src="Group 1.svg" alt="" />
+        <div
+          className="text-center text-black text-2xl font-normal mb-4"
+          style={{ fontFamily: "Inter" }}
+        >
+          분석 중입니다...
+        </div>
+      </motion.div>
+    );
+  }
 
   if (error) {
     return (
@@ -111,7 +135,7 @@ const ResultPage: React.FC = () => {
 
   return (
     <div
-      className="overflow-hidden w-auto min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
+      className="overflow-hidden w-full min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
       style={{ backgroundImage: 'url("Desktop - 9.svg")' }}
     >
       <div className="relative w-full max-w-4xl px-4 text-center mt-10">
@@ -132,10 +156,10 @@ const ResultPage: React.FC = () => {
         )}
       </div>
       <div
-        className={`relative z-10 mt-4 w-full ${
+        className={`relative z-10 mt-4 ${
           isMobile
-            ? "flex overflow-x-auto space-x-4 px-4"
-            : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 px-4 justify-center"
+            ? "w-full flex overflow-x-auto space-x-4 px-4"
+            : "w-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 justify-center"
         }`}
         style={{ WebkitOverflowScrolling: "touch" }}
       >
@@ -245,7 +269,7 @@ const ResultPage: React.FC = () => {
                     <img
                       src="YouTube_Logo_2017.svg"
                       alt="YouTube"
-                      className="w-6 h-auto"
+                      className="w-6 h-6"
                     />
                   </a>
                 )}
