@@ -19,6 +19,7 @@ const ResultPage: React.FC = () => {
   const [overlayDescription, setOverlayDescription] = useState<string | null>(
     null
   );
+  const [overlayLink, setOverlayLink] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
@@ -68,6 +69,7 @@ const ResultPage: React.FC = () => {
           albumArt: result.albumArt
             ? `https://ajtksbackend.p-e.kr/${result.albumArt}`
             : null,
+          link: result.link,
         }));
 
         setSearchResult(decodedResult);
@@ -81,12 +83,14 @@ const ResultPage: React.FC = () => {
     fetchResult();
   }, [taskId]);
 
-  const handleAlbumClick = (description: string) => {
+  const handleAlbumClick = (description: string, link: string) => {
     setOverlayDescription(description);
+    setOverlayLink(link);
   };
 
   const handleOverlayClose = () => {
     setOverlayDescription(null);
+    setOverlayLink(null);
   };
 
   if (error) {
@@ -131,7 +135,7 @@ const ResultPage: React.FC = () => {
         className={`relative z-10 mt-4 w-full ${
           isMobile
             ? "flex overflow-x-auto space-x-4 px-4"
-            : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 px-4"
+            : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 px-4 justify-center"
         }`}
         style={{ WebkitOverflowScrolling: "touch" }}
       >
@@ -143,7 +147,7 @@ const ResultPage: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              onClick={() => handleAlbumClick(result.description)}
+              onClick={() => handleAlbumClick(result.description, result.link)}
             >
               <div className="w-full h-[200px] bg-gray-300">
                 {result.albumArt ? (
@@ -220,15 +224,31 @@ const ResultPage: React.FC = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-white text-black text-base font-normal px-6 py-4 rounded-lg shadow-lg flex items-start justify-between overflow-y-auto max-h-96"
+                className="absolute inset-0 bg-white text-black text-base font-normal px-6 py-4 rounded-lg shadow-lg flex flex-col overflow-y-auto max-h-96"
               >
-                <p style={{ whiteSpace: "pre-line" }}>{overlayDescription}</p>
-                <button
-                  className="text-gray-500 hover:text-gray-700"
-                  onClick={handleOverlayClose}
-                >
-                  X
-                </button>
+                <div className="flex justify-between items-start">
+                  <p style={{ whiteSpace: "pre-line" }}>{overlayDescription}</p>
+                  <button
+                    className="text-gray-500 hover:text-gray-700"
+                    onClick={handleOverlayClose}
+                  >
+                    X
+                  </button>
+                </div>
+                {overlayLink && (
+                  <a
+                    href={overlayLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute top-2 right-2"
+                  >
+                    <img
+                      src="YouTube_Logo_2017.svg"
+                      alt="YouTube"
+                      className="w-6 h-auto"
+                    />
+                  </a>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
