@@ -92,11 +92,13 @@ const ResultPage: React.FC = () => {
   const handleAlbumClick = (description: string, link: string) => {
     setOverlayDescription(description);
     setOverlayLink(link);
+    document.body.style.overflow = "hidden";
   };
 
   const handleOverlayClose = () => {
     setOverlayDescription(null);
     setOverlayLink(null);
+    document.body.style.overflow = "auto";
   };
 
   if (loading) {
@@ -239,22 +241,27 @@ const ResultPage: React.FC = () => {
           >
             Music Description by MU-LLaMA
           </div>
-          {overlayLink && (
-            <a
-              href={overlayLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white text-blue-800 text-sm font-bold px-4 py-2 rounded-full transition duration-200 ease-in-out hover:bg-gray-200 active:bg-gray-300 active:scale-95 flex items-center space-x-2"
-              style={{ height: "2rem" }}
-            >
-              <img
-                src="YouTube_full-color_icon_(2017).svg"
-                alt="YouTube"
-                className="w-6 h-6"
-              />
-              <span>YouTube</span>
-            </a>
-          )}
+          <AnimatePresence>
+            {overlayLink && (
+              <motion.a
+                href={overlayLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white text-blue-800 text-sm font-bold px-4 py-2 rounded-full transition duration-200 ease-in-out hover:bg-gray-200 active:bg-gray-300 active:scale-95 flex items-center space-x-2"
+                style={{ height: "2rem" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <img
+                  src="YouTube_full-color_icon_(2017).svg"
+                  alt="YouTube"
+                  className="w-6 h-6"
+                />
+                <span>YouTube</span>
+              </motion.a>
+            )}
+          </AnimatePresence>
         </div>
         <div
           className="mt-4 bg-gray-800 bg-opacity-80 text-white text-base font-normal px-6 py-4 rounded-lg relative overflow-y-auto"
