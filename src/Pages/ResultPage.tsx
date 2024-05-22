@@ -28,6 +28,7 @@ const ResultPage: React.FC = () => {
 
   const nameRefs = useRef<HTMLDivElement[]>([]);
   const singerRefs = useRef<HTMLDivElement[]>([]);
+  const recommendationBoxRef = useRef<HTMLDivElement>(null);
   const [overflowStates, setOverflowStates] = useState<{
     name: boolean[];
     singer: boolean[];
@@ -92,14 +93,17 @@ const ResultPage: React.FC = () => {
   const handleAlbumClick = (description: string, link: string) => {
     setOverlayDescription(description);
     setOverlayLink(link);
-    document.body.style.overflow = "hidden";
-    document.documentElement.scrollTop = 0;
+    if (recommendationBoxRef.current) {
+      recommendationBoxRef.current.style.overflow = "hidden";
+    }
   };
 
   const handleOverlayClose = () => {
     setOverlayDescription(null);
     setOverlayLink(null);
-    document.body.style.overflow = "auto";
+    if (recommendationBoxRef.current) {
+      recommendationBoxRef.current.style.overflow = "auto";
+    }
   };
 
   if (loading) {
@@ -266,6 +270,7 @@ const ResultPage: React.FC = () => {
         </div>
         <div
           className="mt-4 bg-gray-800 bg-opacity-80 text-white text-base font-normal px-6 py-4 rounded-lg relative overflow-y-auto"
+          ref={recommendationBoxRef}
           style={{ fontFamily: "Inter", maxHeight: "200px" }}
         >
           <ReactMarkdown className="whitespace-pre-line">
